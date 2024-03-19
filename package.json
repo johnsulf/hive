@@ -1,29 +1,22 @@
 {
   "name": "hive",
   "version": "0.0.1",
-  "description": "Hive - a Social Media Application",
+  "description": "Simple overview of use/purpose.",
   "main": "index.js",
   "scripts": {
-    "start": "live-server src/index.html",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "npm-run-all --parallel serve sass",
+    "serve": "live-server src",
+    "sass": "sass src/styles/scss:src/styles/css --watch"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/johnsulf/hive.git"
-  },
-  "keywords": [
-    "social",
-    "media",
-    "some",
-    "hive"
-  ],
+  "keywords": [],
   "author": "Erlend Johnsen",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/johnsulf/hive/issues"
+  "devDependencies": {
+    "live-server": "^1.2.2",
+    "npm-run-all": "^4.1.5",
+    "sass": "^1.72.0"
   },
-  "homepage": "https://github.com/johnsulf/hive#readme",
   "dependencies": {
-    "live-server": "^1.2.2"
+    "bootstrap": "^5.3.3"
   }
 }
