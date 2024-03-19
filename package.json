@@ -1,0 +1,29 @@
+{
+  "name": "hive",
+  "version": "0.0.1",
+  "description": "Hive - a Social Media Application",
+  "main": "index.js",
+  "scripts": {
+    "start": "live-server src/index.html",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/johnsulf/hive.git"
+  },
+  "keywords": [
+    "social",
+    "media",
+    "some",
+    "hive"
+  ],
+  "author": "Erlend Johnsen",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/johnsulf/hive/issues"
+  },
+  "homepage": "https://github.com/johnsulf/hive#readme",
+  "dependencies": {
+    "live-server": "^1.2.2"
+  }
+}
