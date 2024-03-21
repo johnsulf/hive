@@ -4,7 +4,7 @@ import { authFormStates } from "./authFormState.js";
 let authFormState = authFormStates[0];
 
 // selectors
-const authFormTitle = document.getElementById("authFormTitle");
+const authFormTitle = document.querySelectorAll(".authFormTitle");
 const usernameContainer = document.getElementById("usernameContainer");
 const authFormActionBtn = document.getElementById("authFormActionBtn");
 const toggleAuthStateIntro = document.getElementById("toggleAuthStateIntro");
@@ -16,7 +16,10 @@ toggleAuthStateBtn.addEventListener("click", () => toggleAuthFormState());
 
 // helper function
 function setAuthFormValues() {
-    authFormTitle.innerText = authFormState.title;
+    authFormTitle.forEach((e) => {
+        e.innerText = authFormState.title;
+    });
+
     authFormActionBtn.innerText = authFormState.title;
     toggleAuthStateIntro.innerText = authFormState.toggleStateIntro;
     toggleAuthStateBtn.innerText = authFormState.toggleStateButtonText;
