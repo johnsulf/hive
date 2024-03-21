@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,6 +8,7 @@
     <link rel="stylesheet" href="../../styles/css/styles.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
 </head>
+
 <body>
     <header>
         <i class="bi bi-question-circle-fill"></i>
@@ -17,24 +19,36 @@
                 <section class="col-md-6 text-center text-md-start">
                     <h1>hive</h1>
                     <p>
-                        Welcome to <span class="header-font">hive</span>, the dynamic social media platform where connections and conversations flourish. 
+                        Welcome to <span class="header-font">hive</span>, the dynamic social media platform where
+                        connections and conversations flourish.
                         Sign in to join our community, share your moments, and engage with the world around you.
                         Your <span class="header-font">hive</span> adventure starts now!
                     </p>
                 </section>
                 <section class="col-md-6">
-                    <form action="" class="card bg-white p-4 gap-4">
-                        <div class="form-floating">
-                            <input type="email" id="email" name="email" class="form-control" placeholder="email@example.com" required>
-                            <label for="email" class="text-muted">email</label>
+                    <form class="card bg-white p-4 gap-4">
+                        <h2 id="authFormTitle">Sign Up</h2>
+                        <div id="usernameContainer">
+                            <label for="username">username</label>
+                            <input type="text" id="username" name="username" class="form-control" minlength="3"
+                                maxlength="15" required>
                         </div>
-                        <div class="form-floating">
-                            <input type="password" id="password" name="password" class="form-control" placeholder="password" required>
-                            <label for="password" class="text-muted">password</label>
+                        <div>
+                            <label for="email">noroff email</label>
+                            <input type="email" id="email" name="email" class="form-control"
+                                pattern=".+@stud.noroff\.no" required>
                         </div>
-                        <button class="btn btn-secondary" type="submit">Log in</button>
+                        <div>
+                            <label for="password">password</label>
+                            <input type="password" id="password" name="password" class="form-control" minlength="8"
+                                required>
+                        </div>
+                        <button class="btn btn-secondary text-white" id="authFormActionBtn"></button>
+                        <hr />
                         <div class="text-center">
-                            <button type="submit" class="btn btn-link btn-sm text-secondary-emphasis">Sign up</button>
+                            <p id="toggleAuthStateIntro">Allready have an account?</p>
+                            <button type="button" id="toggleAuthStateBtn" class="btn btn-primary btn-sm">Sign
+                                in</button>
                         </div>
                     </form>
                 </section>
@@ -42,5 +56,7 @@
         </div>
     </main>
     <footer></footer>
+    <script type="module" src="../auth/auth.js"></script>
 </body>
+
 </html>
