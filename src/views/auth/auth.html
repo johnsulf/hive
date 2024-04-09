@@ -6,13 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>hive | log in or register</title>
     <link rel="stylesheet" href="../../styles/css/styles.css">
+    <link rel="stylesheet" href="auth.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
 </head>
 
 <body>
-    <header>
-        <i class="bi bi-question-circle-fill"></i>
-    </header>
     <main>
         <div class="container-md text-bg-primary p-4 rounded-4">
             <div class="row align-items-center justify-content-center">
@@ -37,7 +35,7 @@
                         <div>
                             <label for="email">noroff email</label>
                             <input type="email" id="email" name="email" class="form-control"
-                                pattern=".+@stud.noroff\.no" required>
+                                pattern=".+@(stud\.)?noroff\.no" required>
                         </div>
                         <div>
                             <label for="password">password</label>
@@ -57,7 +55,8 @@
         </div>
     </main>
     <footer></footer>
-    <script type="module" src="../auth/auth.js"></script>
+    <script type="module" src="auth.js"></script>
+    <script type="module" src="../../js/api/auth/auth.js"></script>
 </body>
 
 </html>
