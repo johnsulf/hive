@@ -31,7 +31,7 @@ async function login(email, password) {
         const { accessToken, ...profile } = (await response.json()).data;
         saveToLocalStorage("token", accessToken);
         saveToLocalStorage("profile", profile);
-        console.log("profile: ", profile);
+        window.location.replace('/views/feed/feed.html');
         return profile;
     } catch (error) {
         console.error(error);
