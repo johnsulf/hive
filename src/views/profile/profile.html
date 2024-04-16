@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>hive | profile</title>
+    <link rel="stylesheet" href="../../styles/css/styles.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+</head>
+
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg bg-body-tertiary">
+            <div class="container-sm">
+                <a class="navbar-brand" href="../feed/feed.html">hive</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false"
+                    aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                    <div class="navbar-nav">
+                        <a class="nav-link" href="../feed/feed.html">Feed</a>
+                        <a class="nav-link active" aria-current="page" href="#">Profile</a>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <main>
+        <div class="container-sm">
+            <div class="row">
+                <div class="col">
+                    <div class="d-flex flex-column">
+                        <p id="name" class="fw-bold">Name</p>
+                        <a id="email" class="text-muted" href="mailto">email</a>
+                    </div>
+                </div>
+                <div class="col">
+                    <img src="../../assets/profile.jpg" alt="profile image" width="80"
+                        class="img-fluid rounded-circle float-end">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <button id="editProfile" class="btn btn-primary">
+                        <i class="bi bi-pencil"></i>
+                        Edit Profile
+                    </button>
+                </div>
+            </div>
+            <div class="row">
+                <ul class="nav nav-tabs justify-content-center">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="#">Posts</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Followers</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Following</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </main>
+    <footer></footer>
+    <script type="module" src="../../js/api/profile/profile.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
