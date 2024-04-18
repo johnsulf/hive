@@ -1,4 +1,30 @@
-import { API_KEY } from '../../helpers/constants.js';
+import { API_KEY, BASE_URL, SOCIAL_URL, PROFILES_URL, loggedInUser } from '../../helpers/constants.js';
+import { Profile } from '../../models/profileModel.js';
+
+export let isLoggedInUser = false;
+export let profile;
+
+export async function fetchProfile() {
+    const name = new URLSearchParams(window.location.search).get('name');
+
+    try {
+      const response = await fetch(`${BASE_URL}${SOCIAL_URL}${PROFILES_URL}${name}`, {
+            method: 'GET',
+            headers: {
+            'Authorization': "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiaGVzdGVmamVzMSIsImVtYWlsIjoiaGVzdGVmamVzMUBub3JvZmYubm8iLCJpYXQiOjE3MTI4NDA0Mzl9.M6LtpQUaLpu7FxOHBr3hP7sZmwbnZaH3rY5vLfp9Kqc",
+            'X-Noroff-API-Key': API_KEY,
+            'Content-Type': 'application/json'
+            },
+        });
+        const json = await response.json();
+        profile = Profile.fromJson(json);
+        console.log('Profile:', profile);
+        isLoggedInUser = loggedInUser.name === profile.name;
+        console.log('isLoggedInUser:', isLoggedInUser);
+    } catch (e) {
+        console.error('Error fetching profile:', e);
+    }
+}
 
 function fetchProfiles() {
     fetch('https://v2.api.noroff.dev/social/profiles/', {
@@ -18,5 +44,4 @@ function fetchProfiles() {
         });
 }
 
-// Call the function to fetch profiles
-fetchProfiles();
+fetchProfile("hestefjes2");

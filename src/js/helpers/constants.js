@@ -1,4 +1,4 @@
-
+import { getFromLocalStorage } from "./localStorage.js";
 
 // API key
 export const API_KEY = "e7ae91be-9c36-4703-bcf9-9b7c3fde3b98";
@@ -14,3 +14,7 @@ export const LOGIN_URL = "login/";
 export const SOCIAL_URL = "social/";
 export const PROFILES_URL = "profiles/";
 export const POSTS_URL = "posts/";
+
+// Local storage
+export const loggedInUser = getFromLocalStorage('profile');
+export const userToken = getFromLocalStorage('token');

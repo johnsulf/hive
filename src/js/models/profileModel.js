@@ -5,21 +5,24 @@ export class Profile {
         bio,
         avatar,
         banner,
+        _count,
     }) {
         this.name = name;
         this.email = email;
         this.bio = bio;
         this.avatar = avatar;
         this.banner = banner;
+        this._count = _count;
     }
 
     static fromJson(json) {
         return new Profile({
-            name: json.name,
-            email: json.email,
-            bio: json.bio,
-            avatar: json.avatar,
-            banner: json.banner,
+            name: json.data.name,
+            email: json.data.email,
+            bio: json.data.bio,
+            avatar: json.data.avatar,
+            banner: json.data.banner,
+            _count: json.data._count,
         });
     }
 }
