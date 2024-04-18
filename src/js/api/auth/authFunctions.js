@@ -1,4 +1,4 @@
-import { API_KEY, BASE_URL, AUTH_URL, REGISTER_URL, LOGIN_URL } from "./constants.js";
+import { API_KEY, BASE_URL, AUTH_URL, REGISTER_URL, LOGIN_URL } from "../../helpers/constants.js";
 import { saveToLocalStorage, getFromLocalStorage } from "../../helpers/localStorage.js";
 
 async function register(name, email, password) {

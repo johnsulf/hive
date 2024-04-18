@@ -1,6 +1,5 @@
-import { getFromLocalStorage } from "./helpers/localStorage.js";
+import { userToken } from '../js/helpers/constants.js';
 
-export const userToken = getFromLocalStorage('token');
 
 if (userToken) {
     if (!window.location.href.endsWith('/views/feed/feed.html')) {
