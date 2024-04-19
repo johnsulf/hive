@@ -25,18 +25,9 @@ function setAuthFormValues() {
     toggleAuthStateBtn.innerText = authFormState.toggleStateButtonText;
 }
 
-// function that toggles the state
 function toggleAuthFormState() {
-    switch (authFormState.state) {
-        case "signup":
-            authFormState = authFormStates[1];
-            usernameContainer.style.display = "none";
-            setAuthFormValues();
-            break;
-        case "signin":
-            authFormState = authFormStates[0];
-            usernameContainer.style.display = "block";
-            setAuthFormValues();
-            break;
-    }
+    const isSignup = authFormState.state === "signup";
+    authFormState = authFormStates[isSignup ? 1 : 0];
+    usernameContainer.style.display = isSignup ? "none" : "block"; 
+    setAuthFormValues();
 }

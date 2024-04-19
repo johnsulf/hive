@@ -11,19 +11,18 @@
 
 <body>
     <header>
-        <nav class="navbar navbar-expand-lg bg-body-tertiary">
-            <div class="container-sm">
-                <a class="navbar-brand" href="../feed/feed.html">hive</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false"
-                    aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-                    <div class="navbar-nav">
-                        <a class="nav-link" href="../feed/feed.html">Feed</a>
-                        <a class="nav-link active" aria-current="page" href="#">Profile</a>
-                    </div>
+        <nav class="navbar navbar-expand navbar-light bg-body-tertiary">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="#">hive</a>
+                <div class="d-flex">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="../feed/feed.html">Feed</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="#">Profile</a>
+                        </li>
+                    </ul>
                 </div>
             </div>
         </nav>
@@ -35,7 +34,7 @@
                     <div class="d-flex flex-column">
                         <p id="name" class="fw-bold"></p>
                         <a id="email" class="text-muted" href="mailto"></a>
-                        <p id="bio" class="text-muted"></p>
+                        <p id="bio" class="text-muted mt-2"></p>
                     </div>
                 </div>
                 <div class="col">
