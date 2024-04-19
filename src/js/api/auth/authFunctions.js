@@ -3,10 +3,10 @@ import { saveToLocalStorage, getFromLocalStorage } from "../../helpers/localStor
 
 async function register(name, email, password) {
     try {
-        const response = await fetch(`${BASE_URL}${AUTH_URL}${REGISTER_URL}`, {
+        const response = await fetch(BASE_URL+AUTH_URL+REGISTER_URL, {
             method: "POST",
             headers: {
-                'Content-Type': 'application/json',
+                "Content-Type": "application/json",
             },
             body: JSON.stringify({ name, email, password }),
         });
@@ -21,34 +21,49 @@ async function register(name, email, password) {
 
 async function login(email, password) {
     try {
-        const response = await fetch(`${BASE_URL}${AUTH_URL}${LOGIN_URL}`, {
+        const response = await fetch(BASE_URL + AUTH_URL + LOGIN_URL, {
             method: "POST",
             headers: {
-                'Content-Type': 'application/json',
+                "Content-Type": "application/json",
             },
             body: JSON.stringify({ email, password }),
         });
-        const { accessToken, ...profile } = (await response.json()).data;
+
+        if (!response.ok) {
+            throw new Error("Login failed: " + response.statusText);
+        }
+
+        const json = await response.json(); 
+        console.log("json: ", json);
+
+        const { accessToken, ...profile } = json.data; 
         saveToLocalStorage("token", accessToken);
         saveToLocalStorage("profile", profile);
-        window.location.replace('/views/feed/feed.html');
+
+        window.location.replace("/views/feed/feed.html");
         return profile;
     } catch (error) {
-        console.error(error);
+        console.error("Failed to login user. Error: ", error);
         throw new Error("Failed to login user. Error: ", error);
     }
 }
 
+
 export async function onAuth(event) {
     event.preventDefault();
-    const name = document.getElementById("username").value;
     const email = document.getElementById("email").value;
     const password = document.getElementById("password").value;
+    const buttonAction = event.submitter.innerText;
 
-    if (event.submitter.innerText === "Sign Up") {
-        await register(name, email, password);
-        await login(email, password);
-    } else {
-        await login(email, password);
+    try {
+        if (buttonAction === "Sign Up") {
+            const name = document.getElementById("username").value;
+            await register(name, email, password);
+            await login(email, password);
+        } else {
+            await login(email, password);
+        }
+    } catch (error) {
+        console.error("Authentication error:", error.message);
     }
 }

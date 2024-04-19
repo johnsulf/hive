@@ -6,30 +6,104 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>hive | feed</title>
     <link rel="stylesheet" href="../../styles/css/styles.css">
+    <link rel="stylesheet" href="feed.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
 </head>
 
 <body>
     <header>
-        <nav class="navbar navbar-expand-lg bg-body-tertiary">
+        <nav class="navbar navbar-expand navbar-light bg-body-tertiary">
             <div class="container-fluid">
                 <a class="navbar-brand" href="#">hive</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false"
-                    aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-                    <div class="navbar-nav">
-                        <a class="nav-link active" aria-current="page" href="#">Feed</a>
-                        <a class="nav-link" href="../profile/profile.html">Profile</a>
-                    </div>
+                <div class="d-flex">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="#">Feed</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="../profile/profile.html?name=hestefjes1">Profile</a>
+                        </li>
+                    </ul>
                 </div>
             </div>
         </nav>
     </header>
-    <main></main>
+    <main>
+        <section class="container-sm">
+            <div class="row align-items-center justify-content-center">
+                <div class="col-sm-2">
+                    <a class="profile-link" href="">
+                        <img id="image" src="" alt="profile image" class="img-fluid rounded-circle float-end">
+                    </a>
+                </div>
+                <div class="col-auto">
+                    <button class="btn btn-primary new-post-btn rounded-pill px-4" data-bs-toggle="modal" data-bs-target="#newPostModal">
+                        What's buzzing
+                    </button>
+                </div>
+            </div>
+            <hr>
+        </section>
+        <section id="feed">
+
+        </section>
+    </main>
+    
     <footer></footer>
+
+    <!-- New Buzz Modal -->
+    <div class="modal fade" id="newPostModal" tabindex="-1" aria-labelledby="newPostModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="newPostModalLabel">New Buzz</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="newPostForm">
+                        <!-- Title input -->
+                        <div class="mb-3">
+                            <label for="postTitle" class="form-label">Title</label>
+                            <input type="text" class="form-control" id="postTitle" name="title" required placeholder="Enter the title of your Buzz">
+                        </div>
+
+                        <!-- Body input -->
+                        <div class="mb-3">
+                            <label for="postBody" class="form-label">Body</label>
+                            <textarea class="form-control" id="postBody" name="body" placeholder="What's buzzing?"></textarea>
+                        </div>
+
+                        <!-- Tags input -->
+                        <div class="mb-3">
+                            <label for="postTags" class="form-label">Tags</label>
+                            <input type="text" class="form-control" id="postTags" name="tags" placeholder="Add tags (comma separated)">
+                        </div>
+
+                        <!-- Media URL input -->
+                        <div class="mb-3">
+                            <label for="mediaUrl" class="form-label">Media URL</label>
+                            <input type="url" class="form-control" id="mediaUrl" name="mediaUrl" placeholder="https://example.com/image.jpg">
+                        </div>
+
+                        <!-- Media Alt Text input -->
+                        <div class="mb-3">
+                            <label for="mediaAlt" class="form-label">Media Alt Text</label>
+                            <input type="text" class="form-control" id="mediaAlt" name="mediaAlt" placeholder="Describe the image">
+                        </div>
+
+                        <!-- Submit Button -->
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">Create Buzz</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="module" src="feed.js"></script>
+    <script type="module" src="../../js/api/post/post.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
