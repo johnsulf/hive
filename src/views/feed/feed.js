@@ -1,6 +1,6 @@
 import { loggedInUser } from "../../js/helpers/constants.js";
-import { formatDateTime } from "../../js/helpers/dateTime.js";
-import { allPosts, getPosts } from "../../js/api/post/post.js";
+import { getPosts, createPost } from "../../js/api/post/post.js";
+import { buildPostCard } from "../../js/helpers/postCard.js";
 
 const newPostBtn = document.querySelector(".new-post-btn");
 const profileLink = document.querySelectorAll(".profile-link");
@@ -24,6 +24,12 @@ document.addEventListener("DOMContentLoaded", async function () {
             window.location.href = `../post/post.html?id=${post.id}`;
         });
     });
+
+    const newPostForm = document.getElementById("newPostForm");
+    newPostForm.addEventListener("submit", async function (event) {
+        await createPost(event);
+        window.location.reload();
+    });
 });
 
 function populateFeed(allPosts) {
@@ -31,39 +37,6 @@ function populateFeed(allPosts) {
     feed.innerHTML = "";
 
     allPosts.data.forEach((post) => {
-        let mediaImageTag = post.media && post.media.url ?
-            `<img src="${post.media.url}" alt="${post.media.alt}" class="img-fluid post-img">` : "";
-
-        // Adding post content to the feed
-        feed.innerHTML += `
-            <div id="${post.id}" class="post container card my-3 position-relative">
-                <div class="row">
-                    <a href="../profile/profile.html?name=${post.author.name}" class="profile-link col-2 my-3">
-                        <img src="${post.author.avatar.url}" alt="${post.author.avatar.alt}" class="profile-img img-fluid rounded-circle float-end">
-                    </a>
-                    <div class="col my-2">
-                        <p>
-                            <strong>${post.author.name}</strong>
-                            <small class="text-muted">&nbsp;&nbsp;${formatDateTime(post.created)}</small>
-                        </p>
-                        <p class="m-0 h5">${post.title}</p>
-                        <p>${post.body}</p>
-                        ${mediaImageTag}
-                        <strong>${post.tags.join(', ')}</strong> <!-- Assuming tags is an array and joined by commas -->
-                    </div>
-                </div>
-                <div class="row justify-content-start">
-                    <div class="col-2"></div>
-                    <div class="col-1 d-flex fw-bold gap-1">
-                        <p>${post._count.reactions}</p>
-                        <i class="bi bi-hand-thumbs-up"></i>
-                    </div>
-                    <div class="col-1 d-flex fw-bold gap-1">
-                        <p>${post._count.comments}</p>
-                        <i class="bi bi-chat col-1"></i>
-                    </div>
-                </div>
-            </div>
-        `;
+        feed.innerHTML += buildPostCard(post, true);
     });
 }

@@ -5,7 +5,7 @@
 }
 
 .post-img {
-    width: 90%;
+    width: 100%;
     object-fit: contain;
 }
 
@@ -14,7 +14,7 @@
     background-color: #fff;
 }
 
-.post:hover {
-    background-color: #fffcea;
-    border: 1px solid #ffd700;
+.comment {
+    background-color: #fff;
+    border-radius: 0.5rem;
 }

@@ -1,7 +1,7 @@
-import { post, getPost } from "../../js/api/post/post.js";
-import { formatDateTime } from "../../js/helpers/dateTime.js";
+import { post, getPost, postComment } from "../../js/api/post/post.js";
 import { loggedInUser } from "../../js/helpers/constants.js";
-import { deletePost } from "../../js/api/post/post.js";
+import { deletePost, updatePost } from "../../js/api/post/post.js";
+import { buildPostCard } from "../../js/helpers/postCard.js";
 
 async function loadPost() {
     await getPost();
@@ -10,8 +10,8 @@ async function loadPost() {
 
 function populateUserActions() {
     let userActionsHtml = post.author.name === loggedInUser.name ? `
-        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-            <button class="btn btn-secondary me-md-2" type="button">
+        <div class="d-grid gap-2 d-flex justify-content-end">
+            <button id="editBtn" class="btn btn-secondary me-2" type="button" data-bs-toggle="modal" data-bs-target="#editPostModal">
                 <i class="bi bi-pencil-fill"></i>
                 Edit
             </button>
@@ -21,53 +21,32 @@ function populateUserActions() {
             </button>
         </div>
     ` : "";
-        const userActionsContainer = document.getElementById("userActions");
-        userActionsContainer.innerHTML = `
-        <div class="d-grid gap-2 d-md-flex justify-content-md-between">
-            <a class="btn me-md-2" type="button" href="../feed/feed.html">
+
+    const userActionsContainer = document.getElementById("userActions");
+    userActionsContainer.innerHTML = `
+        <div class="gap-2 d-flex justify-content-between">
+            <a class="btn me-2" type="button" href="../feed/feed.html">
                 <i class="bi bi-arrow-left-circle"></i>
                 Back
             </a>
             ${userActionsHtml}
         </div>
-        `;
+    `;
+
+    document.getElementById("editBtn")?.addEventListener("click", populateEditModal);
 }
 
 function populatePost() {
     const postContainer = document.getElementById("post");
-    let mediaImageTag = post.media && post.media.url ?
-        `<img src="${post.media.url}" alt="${post.media.alt}" class="img-fluid post-img mb-3">` : "";
-    // create reactionHtml. post.reactions is an array of objects with properties cound and symbol
-    let reactionHtml = post.reactions.map(reaction => `
-        <div class="col-1 d-flex fw-bold gap-1">
-            <p>${reaction.count}</p>
-            <p>${reaction.symbol}</p>
-        </div>
-    `).join("");
+    postContainer.innerHTML = buildPostCard(post, false);
+}
 
-    postContainer.innerHTML = `
-        <div class="container card my-3 position-relative">
-            <div class="row">
-                <a href="../profile/profile.html?name=${post.author.name}" class="profile-link col-2 my-3">
-                    <img src="${post.author.avatar["url"]}" alt="${post.author.avatar["alt"]}" class="profile-img img-fluid rounded-circle float-end">
-                </a>
-                <div class="col my-2">
-                    <p>
-                        <strong>${post.author.name}</strong>
-                        <small class="text-muted">&nbsp;&nbsp;${formatDateTime(post.created)}</small>
-                    </p>
-                    <p class="m-0 h5">${post.title}</p>
-                    <p>${post.body}</p>
-                    ${mediaImageTag}
-                    <strong>${post.tags}</strong>
-                </div>
-            </div>
-            <div class="row justify-content-start">
-                <div class="col-2"></div>
-                ${reactionHtml}
-            </div>
-        </div>
-    `;
+function populateEditModal() {
+    document.getElementById("postTitle").value = post.title || '';
+    document.getElementById("postBody").value = post.body || '';
+    document.getElementById("postTags").value = post.tags.join(', ') || '';
+    document.getElementById("mediaUrl").value = post.mediaUrl || '';
+    document.getElementById("mediaAlt").value = post.mediaAlt || '';
 }
 
 document.addEventListener("DOMContentLoaded", async function () {
@@ -82,4 +61,18 @@ document.addEventListener("DOMContentLoaded", async function () {
             window.location.href = "../feed/feed.html";
         });
     }
+
+    const editPostForm = document.querySelector("#editPostForm");
+    editPostForm.addEventListener("submit", async function (e) {
+        e.preventDefault();
+        await updatePost(e);
+        window.location.reload();
+    });
+
+    const commentForm = document.querySelector(".comment-form");
+    commentForm.addEventListener("submit", async function (e) {
+        e.preventDefault();
+        await postComment(e);
+        window.location.reload();
+    });
 });
