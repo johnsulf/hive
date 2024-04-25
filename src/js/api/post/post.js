@@ -1,12 +1,13 @@
 import { API_KEY, BASE_URL, POSTS_URL, SOCIAL_URL } from "../../helpers/constants.js";
 import { getFromLocalStorage } from "../../helpers/localStorage.js";
-import { populateFeed } from "../../../views/feed/feed.js";
+import { Post } from "../../models/postModel.js";   
 
-let allPosts = {};
+export let allPosts = {};
+export let post;
 
-async function getPosts() {
+export async function getPosts() {
     try {
-        const response = await fetch(BASE_URL+SOCIAL_URL+POSTS_URL+"?_author=true", {
+        const response = await fetch(BASE_URL+SOCIAL_URL+POSTS_URL+"?_author=true&_reactions=true", {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
@@ -17,68 +18,161 @@ async function getPosts() {
         const posts = await response.json();
         allPosts = posts;
         console.log("All posts:", allPosts);
+        return allPosts;
     } catch (error) {
         console.error("Error fetching posts:", error);
         throw new Error("Failed to fetch posts. Error: ", error);
     }
 }
 
-document.addEventListener("DOMContentLoaded", async function () {
-   await getPosts();
-   populateFeed(allPosts);
-    const form = document.getElementById("newPostForm");
-    form.addEventListener("submit", async function (event) {
-        event.preventDefault();  // Prevent the default form submission behavior
+export async function getPost() {
+    const id = new URLSearchParams(window.location.search).get("id");
 
-        try {
-            // Collecting form data
-            const title = document.getElementById("postTitle").value;
-            const body = document.getElementById("postBody").value;
-            const tagsInput = document.getElementById("postTags").value;
-            const tags = tagsInput ? tagsInput.split(",").map(tag => tag.trim()) : []; // Handling empty tag input
-            const mediaUrl = document.getElementById("mediaUrl").value;
-            const mediaAlt = document.getElementById("mediaAlt").value;
+    try {
+        const response = await fetch(BASE_URL + SOCIAL_URL + POSTS_URL + id + "?_author=true&_reactions=true&_comments=true", {
+            method: "GET",
+            headers: {
+                "Authorization": "Bearer " + getFromLocalStorage("token"),
+                "Content-Type": "application/json",
+                "X-Noroff-API-Key": API_KEY,
+            }
+        });
+        const json = await response.json();
+        post = Post.fromJson(json);
+    } catch (e) {
+        console.error("Error fetching post:", e);
+    }
 
-            // Creating the post object according to your API's requirements
-            const postData = {
-                title: title,
-                body: body,
-                tags: tags
+}
+
+export async function createPost(event) {
+    event.preventDefault(); 
+    try {
+        const title = document.getElementById("postTitle").value;
+        const body = document.getElementById("postBody").value;
+        const tagsInput = document.getElementById("postTags").value;
+        const tags = tagsInput ? tagsInput.split(",").map(tag => tag.trim()) : [];
+        const mediaUrl = document.getElementById("mediaUrl").value;
+        const mediaAlt = document.getElementById("mediaAlt").value;
+
+        const postData = {
+            title: title,
+            body: body,
+            tags: tags
+        };
+
+        if (mediaUrl) {
+            postData.media = {
+                url: mediaUrl,
+                alt: mediaAlt
             };
-
-            // Include media only if the URL is not empty
-            if (mediaUrl) {
-                postData.media = {
-                    url: mediaUrl,
-                    alt: mediaAlt
-                };
-            }
-
-            console.log("Creating post:", postData);
-
-            // Sending the POST request to the API
-            const response = await fetch(`${BASE_URL}${SOCIAL_URL}${POSTS_URL}`, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    "X-Noroff-API-Key": API_KEY,
-                    "Authorization": "Bearer " + getFromLocalStorage("token")
-                },
-                body: JSON.stringify(postData)
-            });
-
-            if (!response.ok) {
-                // Extract response body for detailed error message if possible
-                const errorData = await response.json();
-                throw new Error(`Failed to create post. Status: ${response.statusText}, Server message: ${errorData.message}`);
-            }
-
-            const data = await response.json();
-            console.log("Post created successfully:", data);
-            // Handle UI updates or redirections here
-        } catch (error) {
-            console.error("Error creating post:", error);
-            // Display error messages to the user here
         }
-    });
-});
+
+        console.log("Creating post:", postData);
+
+        const response = await fetch(`${BASE_URL}${SOCIAL_URL}${POSTS_URL}`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "X-Noroff-API-Key": API_KEY,
+                "Authorization": "Bearer " + getFromLocalStorage("token")
+            },
+            body: JSON.stringify(postData)
+        });
+
+        if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(`Failed to create post. Status: ${response.statusText}, Server message: ${errorData.message}`);
+        }
+
+        const data = await response.json();
+        console.log("Post created successfully:", data);
+        // Handle UI updates or redirections here TODO
+    } catch (error) {
+        console.error("Error creating post:", error);
+        // Display error messages to the user here TODO
+    }
+}
+
+export async function updatePost(event) {
+    event.preventDefault();
+    const id = new URLSearchParams(window.location.search).get("id");
+    const title = document.getElementById("postTitle").value;
+    const body = document.getElementById("postBody").value;
+    const tagsInput = document.getElementById("postTags").value;
+    const tags = tagsInput ? tagsInput.split(",").map(tag => tag.trim()) : [];
+    const mediaUrl = document.getElementById("mediaUrl").value;
+    const mediaAlt = document.getElementById("mediaAlt").value;
+
+    const postData = {
+        title: title,
+        body: body,
+        tags: tags
+    };
+
+    if (mediaUrl) {
+        postData.media = {
+            url: mediaUrl,
+            alt: mediaAlt
+        };
+    }
+
+    try {
+        const response = await fetch(BASE_URL + SOCIAL_URL + POSTS_URL + id, {
+            method: "PUT",
+            headers: {
+                "Authorization": "Bearer " + getFromLocalStorage("token"),
+                "Content-Type": "application/json",
+                "X-Noroff-API-Key": API_KEY,
+            },
+            body: JSON.stringify(postData)
+        });
+        const json = await response.json();
+        console.log("Updated post:", json);
+    } catch (e) {
+        console.error("Error updating post:", e);
+    }
+}
+
+export async function deletePost() {
+    const id = new URLSearchParams(window.location.search).get("id");
+
+    try {
+        const response = await fetch(BASE_URL + SOCIAL_URL + POSTS_URL + id, {
+            method: "DELETE",
+            headers: {
+                "Authorization": "Bearer " + getFromLocalStorage("token"),
+                "Content-Type": "application/json",
+                "X-Noroff-API-Key": API_KEY,
+            }
+        });
+        const json = await response.json();
+        console.log("Deleted post:", json);
+    } catch (e) {
+        console.error("Error deleting post:", e);
+    }
+}
+
+export async function postComment(event) {
+    event.preventDefault();
+    const id = new URLSearchParams(window.location.search).get("id");
+    const comment = document.getElementById("comment").value;
+
+    try {
+        const response = await fetch(BASE_URL + SOCIAL_URL + POSTS_URL + id + "/comment", {
+            method: "POST",
+            headers: {
+                "Authorization": "Bearer " + getFromLocalStorage("token"),
+                "Content-Type": "application/json",
+                "X-Noroff-API-Key": API_KEY,
+            },
+            body: JSON.stringify({
+                body: comment
+            })
+        });
+        const json = await response.json();
+        console.log("Comment posted:", json);
+    } catch (e) {
+        console.error("Error posting comment:", e);
+    }
+}

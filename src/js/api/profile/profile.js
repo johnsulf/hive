@@ -26,23 +26,3 @@ export async function fetchProfile() {
         console.error("Error fetching profile:", e);
     }
 }
-
-function fetchProfiles() {
-    fetch("https://v2.api.noroff.dev/social/profiles/", {
-        method: "GET",
-        headers: {
-            "Authorization": "Bearer " + getFromLocalStorage("token"),
-            "X-Noroff-API-Key": API_KEY,
-            "Content-Type": "application/json"
-        },
-    })
-        .then(response => response.json())
-        .then(data => {
-            console.log("Profiles:", data);
-        })
-        .catch(error => {
-            console.error("Error fetching profiles:", error);
-        });
-}
-
-fetchProfile("hestefjes2");
