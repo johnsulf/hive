@@ -1,5 +1,5 @@
-import { API_KEY, BASE_URL, AUTH_URL, REGISTER_URL, LOGIN_URL } from "../../helpers/constants.js";
-import { saveToLocalStorage, getFromLocalStorage } from "../../helpers/localStorage.js";
+import { BASE_URL, AUTH_URL, REGISTER_URL, LOGIN_URL } from "../../helpers/constants.js";
+import { saveToLocalStorage } from "../../helpers/localStorage.js";
 
 async function register(name, email, password) {
     try {
@@ -48,6 +48,11 @@ async function login(email, password) {
     }
 }
 
+export function logout() {
+    localStorage.removeItem("token");
+    localStorage.removeItem("profile");
+    window.location.replace("/index.html");
+}
 
 export async function onAuth(event) {
     event.preventDefault();
