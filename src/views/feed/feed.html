@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>hive | feed</title>
     <link rel="stylesheet" href="../../styles/css/styles.css">
-    <link rel="stylesheet" href="../post/post.css">
+    <link rel="stylesheet" href="feed.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
 </head>
 
@@ -47,11 +47,33 @@
         <section class="search-field">
             <div class="container-sm">
                 <form id="searchForm">
-                    <div class="input-group mb-3">
-                        <input id="search" type="text" class="form-control bg-white" placeholder="Search for buzz" aria-label="Search for buzz"
+                    <div class="input-group">
+                        <input id="search" type="text" class="form-control form-control-lg bg-white" placeholder="Search in authors, titles, text, images and tags" aria-label="Search for buzz"
                             aria-describedby="search-button">
                     </div>
+                    <p class="search-result-count mt-1"></p>
                 </form>
+            </div>
+        </section>
+        <section class="filter">
+            <div class="container">
+                <div class="row mt-2">
+                    <div class="col" id="activeFilters"></div>
+                    <div class="dropdown col d-flex justify-content-end p-0">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" id="filterDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="bi bi-funnel"></i>
+                            Select Filters
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="filterDropdown">
+                            <li><a class="dropdown-item" href="#" data-filter="This weeks posts">This weeks posts</a></li>
+                            <li><a class="dropdown-item" href="#" data-filter="With reactions">With Reactions</a></li>
+                            <li><a class="dropdown-item" href="#" data-filter="With comments">With Comments</a></li>
+                            <li><a class="dropdown-item" href="#" data-filter="With Images">With Images</a></li>
+                            <li><a class="dropdown-item" href="#" data-filter="Only Text">Only Text</a></li>
+                            <li><a class="dropdown-item" href="#" data-filter="Edited Posts">Edited Posts</a></li>
+                        </ul>                    
+                    </div>
+                </div>
             </div>
         </section>
         <section id="feed"></section>
