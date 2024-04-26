@@ -17,7 +17,7 @@ export async function getPosts() {
         });
         const posts = await response.json();
         allPosts = posts;
-        console.log("All posts:", allPosts);
+        console.log(allPosts);
         return allPosts;
     } catch (error) {
         console.error("Error fetching posts:", error);
