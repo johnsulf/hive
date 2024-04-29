@@ -50,17 +50,6 @@ document.addEventListener("DOMContentLoaded", async function () {
     image.src = `${loggedInUser.avatar.url}`; 
     image.alt = `${loggedInUser.avatar.alt}`;
 
-    profileLink.forEach((link) => {
-        link.href = `../profile/profile.html?name=${loggedInUser.name}`;
-    });
-
-    const posts = document.querySelectorAll(".post");
-    posts.forEach((post) => {
-        post.addEventListener("click", function () {
-            window.location.href = `../post/post.html?id=${post.id}`;
-        });
-    });
-
     const newPostForm = document.getElementById("newPostForm");
     newPostForm.addEventListener("submit", async function (event) {
         await createPost(event);
@@ -78,6 +67,18 @@ document.addEventListener("DOMContentLoaded", async function () {
     });
 });
 
+function setPostLinks() {
+    profileLink.forEach((link) => {
+        link.href = `../profile/profile.html?id=${loggedInUser.id}`;
+    });    
+    
+    const posts = document.querySelectorAll(".post");
+    posts.forEach((post) => {
+        post.addEventListener("click", function () {
+            window.location.href = `../post/post.html?id=${post.id}`;
+        });
+    });
+}
 
 function populateFeed(posts, searchResult = "") {
     const feed = document.getElementById("feed");
@@ -87,6 +88,7 @@ function populateFeed(posts, searchResult = "") {
         posts.forEach((post) => {
             feed.innerHTML += buildPostCard(post, true);
         });
+        setPostLinks();
     } else {
         feed.innerHTML = searchResult === "" ? "<p>No posts found.</p>" : `<p>No posts found for ${searchResult}.</p>`;
     }
