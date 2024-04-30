@@ -10,7 +10,7 @@ export function buildPostCard(post, isFeed = false) {
                 <div class="col">
                     <div class="d-flex align-items-end gap-2">
                         <strong>${post.author.name}</strong>
-                        <small class="text-muted">${formatDateTime(post.created)}</small>
+                        <small class="text-muted">${formatDateTime(post.created)}<span class="text-secondary">${edited(post)}</span></small>
                     </div>
                     <p class="h5 mt-2">${post.title}</p>
                     <p>${post.body === null ? "" : post.body}</p>
@@ -46,6 +46,10 @@ function buildImage(media) {
     return media && media.url 
     ? `<img src="${media.url}" alt="${media.alt}" class="img-fluid post-img mb-3">` 
     : "";
+}
+
+function edited(post) {
+    return post.updated !== post.created ? "&nbsp;&nbsp;&nbsp;EDITED" : "";
 }
 
 function buildReactions(post) {
