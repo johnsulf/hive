@@ -6,7 +6,6 @@ const newPostBtn = document.querySelector(".new-post-btn");
 const profileLink = document.querySelectorAll(".profile-link");
 const image = document.querySelector("#image");
 const searchForm = document.getElementById("searchForm");
-const searchResultCount = document.querySelector(".search-result-count");
 
 const activeFilters = [];
 
@@ -28,12 +27,7 @@ searchForm.addEventListener("keyup", async function (event) {
     return titleMatch || bodyMatch || imgAltTextMatch || tagsMatch || authorMatch;
     });
 
-    searchResultCount.innerText = `Found ${filteredPosts.length} posts including "${search}".`;
     populateFeed(filteredPosts, search);
-
-    if (search.length === 0) {
-        searchResultCount.innerText = "";
-    }
 });
 
 document.addEventListener("DOMContentLoaded", async function () {
@@ -82,9 +76,10 @@ function setPostLinks() {
 
 function populateFeed(posts, searchResult = "") {
     const feed = document.getElementById("feed");
-    feed.innerHTML = "";  
+    feed.innerHTML = "";
 
     if (posts && posts.length > 0) {
+        feed.innerHTML = `<p>Showing ${posts.length} posts</p>`;  
         posts.forEach((post) => {
             feed.innerHTML += buildPostCard(post, true);
         });
