@@ -1,5 +1,6 @@
 import { userToken } from '../js/helpers/constants.js';
 
+// Redirect to the feed page if the user is logged in, otherwise redirect to the login page
 
 if (userToken) {
     if (!window.location.href.endsWith('/views/feed/feed.html')) {

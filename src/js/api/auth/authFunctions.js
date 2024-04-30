@@ -1,6 +1,20 @@
 import { BASE_URL, AUTH_URL, REGISTER_URL, LOGIN_URL } from "../../helpers/constants.js";
 import { saveToLocalStorage } from "../../helpers/localStorage.js";
 
+/**
+ * Register a new user
+ * @param {string} name Users desired name
+ * @param {string} email Users noroff email
+ * @param {string} password Users password
+ * @returns {Promise <{data: {name: string, email: string, id: string}}> | Error} user object or error
+ * ```js
+ * const name = "John Doe";
+ * const email = "johndoe@example.com";
+ * const password = "password1234";
+ * const result = await register(name, email, password);
+ * console.log(result); // {data: {name: "John Doe", email: "johndoe@example.com", id: "60f7c9f4c6b4f40015f6b3b4"}}
+ * ```
+ */
 async function register(name, email, password) {
     try {
         const response = await fetch(BASE_URL+AUTH_URL+REGISTER_URL, {
