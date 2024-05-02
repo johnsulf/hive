@@ -40,7 +40,11 @@
                             <input type="password" id="password" name="password" class="form-control" minlength="8"
                                 required>
                         </div>
-                        <button type="submit" class="btn btn-secondary text-white" id="authFormActionBtn"></button>
+                        <button type="submit" class="btn btn-secondary text-white" id="authFormActionBtn">
+                            Sign Up
+                            <span class="spinner-border spinner-border-sm" style="display:none;" id="loadingSpinner" aria-hidden="true"></span>
+                        </button>
+                        <div id="authFormFeedback" class="alert alert-danger" style="display:none;"></div>                        
                         <hr />
                         <div class="text-center">
                             <p id="toggleAuthStateIntro">Allready have an account?</p>
@@ -55,6 +59,7 @@
     <footer></footer>
     <script type="module" src="auth.js"></script>
     <script type="module" src="../../js/api/auth/auth.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>

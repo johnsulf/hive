@@ -1,6 +1,9 @@
 import { BASE_URL, AUTH_URL, REGISTER_URL, LOGIN_URL } from "../../helpers/constants.js";
 import { saveToLocalStorage } from "../../helpers/localStorage.js";
 
+const submitButton = document.getElementById("authFormActionBtn");
+const loadingSpinner = document.getElementById("loadingSpinner");
+
 /**
  * Register a new user
  * @param {string} name Users desired name
@@ -74,6 +77,10 @@ export async function onAuth(event) {
     const password = document.getElementById("password").value;
     const buttonAction = event.submitter.innerText;
 
+    loadingSpinner.style.display = 'inline-block';
+    submitButton.disabled = true;
+    submitButton.innerText = buttonAction === "Sign Up" ? "Signing Up..." : "Logging In...";
+
     try {
         if (buttonAction === "Sign Up") {
             const name = document.getElementById("username").value;
@@ -82,7 +89,13 @@ export async function onAuth(event) {
         } else {
             await login(email, password);
         }
-    } catch (error) {
+        loadingSpinner.style.display = 'none';
+        submitButton.disabled = false;
+        submitButton.innerText = buttonAction;
+    } catch ( error ) {
         console.error("Authentication error:", error.message);
+        loadingSpinner.style.display = 'none';
+        submitButton.disabled = false;
+        submitButton.innerText = buttonAction;
     }
 }
