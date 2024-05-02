@@ -11860,4 +11860,25 @@ h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6, .header-font {
   font-family: "Madimi One", cursive;
 }
 
+.profile-img {
+  max-height: 4rem;
+  aspect-ratio: 1/1;
+  object-fit: cover;
+}
+
+.post-img {
+  width: 100%;
+  object-fit: contain;
+}
+
+.post {
+  cursor: pointer;
+  background-color: #fff;
+}
+
+.comment {
+  background-color: #fff;
+  border-radius: 0.5rem;
+}
+
 /*# sourceMappingURL=styles.css.map */

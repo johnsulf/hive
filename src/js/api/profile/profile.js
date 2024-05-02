@@ -48,3 +48,24 @@ export async function followOrUnfollowUser(followOrUnfollow) {
         console.error("Error following user:", e);
     }
 }
+
+export async function editProfile(data) {
+    try {
+        const response = await fetch(BASE_URL+SOCIAL_URL+PROFILES_URL+profile.name, {
+            method: "PUT",
+            headers: {
+                "Authorization": "Bearer " + getFromLocalStorage("token"),
+                "X-Noroff-API-Key": API_KEY,
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(data)
+        });
+        const json = await response.json();
+        console.log("Edit Profile Response:", json);
+        profile = Profile.fromJson(json);
+    }
+    catch (e) {
+        console.error("Error editing profile:", e);
+    }
+}
+
