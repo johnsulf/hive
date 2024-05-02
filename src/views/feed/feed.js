@@ -74,7 +74,7 @@ function attachEventListeners() {
     });
 }
 
-function setPostLinks() {
+ function setPostLinks() {
     profileLink.forEach((link) => {
         link.href = `../profile/profile.html?name=${loggedInUser.name}`;
     });    

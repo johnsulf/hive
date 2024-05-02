@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>hive | profile</title>
     <link rel="stylesheet" href="../../styles/css/styles.css">
+    <link rel="stylesheet" href="../post/post.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
 </head>
 
@@ -46,16 +47,32 @@
             <div class="row">
                 <ul class="nav nav-tabs justify-content-center">
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="#">Posts</a>
+                        <a class="nav-link active position-relative" aria-current="page" href="#">
+                            Posts
+                            <span id="postCount" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-primary text-black">
+                                2 <span class="visually-hidden">number of posts</span>
+                            </span>
+                        </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Followers</a>
+                        <a class="nav-link position-relative" href="#">
+                            Followers
+                            <span id="followerCount" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-primary text-black">
+                                2 <span class="visually-hidden">number of followers</span>
+                            </span>
+                        </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Following</a>
+                        <a class="nav-link position-relative" href="#">
+                            Following
+                            <span id="followingCount" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-primary text-black">
+                                2 <span class="visually-hidden">number of following</span>
+                            </span>
+                        </a>
                     </li>
                 </ul>
             </div>
+            <section class="tab-view"></section>
         </div>
     </main>
     <footer></footer>
