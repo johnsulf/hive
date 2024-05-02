@@ -40,16 +40,17 @@
                             <input type="password" id="password" name="password" class="form-control" minlength="8"
                                 required>
                         </div>
-                        <button type="submit" class="btn btn-secondary text-white" id="authFormActionBtn">
+                        <button type="submit" class="btn btn-primary" id="authFormActionBtn">
                             Sign Up
-                            <span class="spinner-border spinner-border-sm" style="display:none;" id="loadingSpinner" aria-hidden="true"></span>
+                            <span class="spinner-border spinner-border-sm" style="display:none;" id="authSpinner" aria-hidden="true"></span>
                         </button>
                         <div id="authFormFeedback" class="alert alert-danger" style="display:none;"></div>                        
                         <hr />
                         <div class="text-center">
                             <p id="toggleAuthStateIntro">Allready have an account?</p>
-                            <button type="button" id="toggleAuthStateBtn" class="btn btn-primary btn-sm">Sign
-                                in</button>
+                            <button type="button" id="toggleAuthStateBtn" class="btn btn-secondary btn-sm text-white">
+                                Sign in
+                            </button>
                         </div>
                     </form>
                 </section>

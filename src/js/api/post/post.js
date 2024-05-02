@@ -48,12 +48,17 @@ export async function getPost() {
 export async function createPost(event) {
     event.preventDefault(); 
     try {
+        const submitPostBtn = document.getElementById("submitPostBtn");
+        const submitPostSpinner = document.getElementById("submitPostSpinner");
         const title = document.getElementById("postTitle").value;
         const body = document.getElementById("postBody").value;
         const tagsInput = document.getElementById("postTags").value;
         const tags = tagsInput ? tagsInput.split(",").map(tag => tag.trim()) : [];
         const mediaUrl = document.getElementById("mediaUrl").value;
         const mediaAlt = document.getElementById("mediaAlt").value;
+
+        submitPostSpinner.style.display = 'inline-block';
+        submitPostBtn.disabled = true;
 
         const postData = {
             title: title,
@@ -91,11 +96,16 @@ export async function createPost(event) {
     } catch (error) {
         console.error("Error creating post:", error);
         // Display error messages to the user here TODO
+    } finally {
+        submitPostSpinner.style.display = 'none';
+        submitPostBtn.disabled = false;
     }
 }
 
 export async function updatePost(event) {
     event.preventDefault();
+    const editPostBtn = document.getElementById("editPostBtn");
+    const editPostSpinner = document.getElementById("editPostSpinner");
     const id = new URLSearchParams(window.location.search).get("id");
     const title = document.getElementById("postTitle").value;
     const body = document.getElementById("postBody").value;
@@ -103,6 +113,9 @@ export async function updatePost(event) {
     const tags = tagsInput ? tagsInput.split(",").map(tag => tag.trim()) : [];
     const mediaUrl = document.getElementById("mediaUrl").value;
     const mediaAlt = document.getElementById("mediaAlt").value;
+
+    editPostSpinner.style.display = 'inline-block';
+    editPostBtn.disabled = true;
 
     const postData = {
         title: title,
@@ -131,6 +144,9 @@ export async function updatePost(event) {
         console.log("Updated post:", json);
     } catch (e) {
         console.error("Error updating post:", e);
+    } finally {
+        editPostSpinner.style.display = 'none';
+        editPostBtn.disabled = false;
     }
 }
 
@@ -157,6 +173,11 @@ export async function postComment(event) {
     event.preventDefault();
     const id = new URLSearchParams(window.location.search).get("id");
     const comment = document.getElementById("comment").value;
+    const commentBtn = document.getElementById("commentBtn");
+    const commentSpinner = document.getElementById("commentSpinner");
+
+    commentSpinner.style.display = 'inline-block';
+    commentBtn.disabled = true;
 
     try {
         const response = await fetch(BASE_URL + SOCIAL_URL + POSTS_URL + id + "/comment", {
@@ -174,5 +195,8 @@ export async function postComment(event) {
         console.log("Comment posted:", json);
     } catch (e) {
         console.error("Error posting comment:", e);
+    } finally {
+        commentSpinner.style.display = 'none';
+        commentBtn.disabled = false;
     }
 }
