@@ -116,8 +116,9 @@ function buildCommentSection(post) {
                         <label for="comment" class="form-label">Write a Comment</label>
                         <textarea class="form-control" id="comment" rows="3"></textarea>
                     </div>
-                    <button type="submit" class="btn btn-primary my-3">
+                    <button type="submit" class="btn btn-primary my-3" id="commentBtn">
                         Submit
+                        <span class="spinner-border spinner-border-sm" style="display:none;" id="commentSpinner" aria-hidden="true"></span>
                     </button>
                 </form>
             </div>

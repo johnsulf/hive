@@ -26,24 +26,38 @@ searchForm.addEventListener("keyup", async function (event) {
     const authorMatch = post.author.name.toLowerCase().includes(search.toLowerCase());
     return titleMatch || bodyMatch || imgAltTextMatch || tagsMatch || authorMatch;
     });
-
     populateFeed(filteredPosts, search);
 });
 
 document.addEventListener("DOMContentLoaded", async function () {
-    const fetchedPosts = await getPosts();
-    console.log("Fetched Posts:", fetchedPosts);
-
-    if (fetchedPosts && Array.isArray(fetchedPosts.data)) {
-        populateFeed(fetchedPosts.data); 
-    } else {
-        console.error("Expected posts to be contained in an array under 'data', received:", fetchedPosts);
-    }
 
     newPostBtn.innerText += `, ${loggedInUser.name}?`;
     image.src = `${loggedInUser.avatar.url}`; 
     image.alt = `${loggedInUser.avatar.alt}`;
 
+    const feedSpinner = document.getElementById("feedSpinner");
+    try {
+        feedSpinner.style.display = 'block';
+
+        const fetchedPosts = await getPosts();
+        console.log("Fetched Posts:", fetchedPosts);
+
+        if (fetchedPosts && Array.isArray(fetchedPosts.data)) {
+            populateFeed(fetchedPosts.data); 
+        } else {
+            console.error("Expected posts to be contained in an array under 'data', received:", fetchedPosts);
+        }
+    } catch (error) {
+        console.error("Error fetching posts:", error);
+    } finally {
+        feedSpinner.style.display = 'none';
+    }
+
+    attachEventListeners();
+});
+
+
+function attachEventListeners() {
     const newPostForm = document.getElementById("newPostForm");
     newPostForm.addEventListener("submit", async function (event) {
         await createPost(event);
@@ -51,7 +65,6 @@ document.addEventListener("DOMContentLoaded", async function () {
     });
 
     const filterItems = document.querySelectorAll('.dropdown-item');
-
     filterItems.forEach(item => {
         item.addEventListener('click', function(event) {
             event.preventDefault();
@@ -59,11 +72,11 @@ document.addEventListener("DOMContentLoaded", async function () {
             addFilter(filterName);
         });
     });
-});
+}
 
 function setPostLinks() {
     profileLink.forEach((link) => {
-        link.href = `../profile/profile.html?id=${loggedInUser.id}`;
+        link.href = `../profile/profile.html?name=${loggedInUser.name}`;
     });    
     
     const posts = document.querySelectorAll(".post");
@@ -85,7 +98,7 @@ function populateFeed(posts, searchResult = "") {
         });
         setPostLinks();
     } else {
-        feed.innerHTML = searchResult === "" ? "<p>No posts found.</p>" : `<p>No posts found for ${searchResult}.</p>`;
+        feed.innerHTML = searchResult === "" ? "<p>No posts found.</p>" : `<p>No posts found for <i>${searchResult}</i>.</p>`;
     }
 }
 

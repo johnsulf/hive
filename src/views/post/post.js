@@ -50,7 +50,11 @@ function populateEditModal() {
 }
 
 document.addEventListener("DOMContentLoaded", async function () {
+
+    const postSpinner = document.getElementById("postSpinner");
+    postSpinner.style.display = 'block';
     await loadPost();
+    postSpinner.style.display = 'none';
     populatePost();
     populateUserActions();
 

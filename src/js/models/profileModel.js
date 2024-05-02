@@ -5,6 +5,9 @@ export class Profile {
         bio,
         avatar,
         banner,
+        followers,
+        following,
+        posts,
         _count,
     }) {
         this.name = name;
@@ -12,6 +15,9 @@ export class Profile {
         this.bio = bio;
         this.avatar = avatar;
         this.banner = banner;
+        this.followers = followers;
+        this.following = following;
+        this.posts = posts;
         this._count = _count;
     }
 
@@ -22,6 +28,9 @@ export class Profile {
             bio: json.data.bio,
             avatar: json.data.avatar,
             banner: json.data.banner,
+            followers: json.data.followers,
+            following: json.data.following,
+            posts: json.data.posts,
             _count: json.data._count,
         });
     }

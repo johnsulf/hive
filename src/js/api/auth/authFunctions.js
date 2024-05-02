@@ -1,6 +1,9 @@
 import { BASE_URL, AUTH_URL, REGISTER_URL, LOGIN_URL } from "../../helpers/constants.js";
 import { saveToLocalStorage } from "../../helpers/localStorage.js";
 
+const authSpinner = document.getElementById("authSpinner");
+const submitButton = document.getElementById("authFormActionBtn");
+
 /**
  * Register a new user
  * @param {string} name Users desired name
@@ -70,9 +73,13 @@ export function logout() {
 
 export async function onAuth(event) {
     event.preventDefault();
+
     const email = document.getElementById("email").value;
     const password = document.getElementById("password").value;
     const buttonAction = event.submitter.innerText;
+
+    authSpinner.style.display = 'inline-block';
+    submitButton.disabled = true;
 
     try {
         if (buttonAction === "Sign Up") {
@@ -82,7 +89,10 @@ export async function onAuth(event) {
         } else {
             await login(email, password);
         }
-    } catch (error) {
+    } catch ( error ) {
         console.error("Authentication error:", error.message);
+    } finally {
+        authSpinner.style.display = 'none';
+        submitButton.disabled = false;
     }
 }
