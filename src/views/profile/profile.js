@@ -1,5 +1,5 @@
 import { profile, fetchProfile, isLoggedInUser, isFollowingUser, followOrUnfollowUser, editProfile } from "../../js/api/profile/profile.js";
-import { logout } from "../../js/api/auth/authFunctions.js";
+import { logout } from "../../js/api/auth/auth.js";
 import { formatDateTime } from "../../js/helpers/dateTime.js";
 import { buildImage } from "../../js/helpers/postCard.js";
 
@@ -24,6 +24,7 @@ async function loadProfile() {
     followingCountElement.textContent = profile._count.following;
     nameContainer.innerHTML = profile.name;
     emailContainer.innerHTML = profile.email;
+    emailContainer.href = `mailto:${profile.email}`;
     imageContainer.src = profile.avatar.url;
 
     populatePosts();
@@ -144,13 +145,14 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 function populatePosts() {
+    postsTab.innerHTML = '';
     profile.posts.forEach(post => {
         console.log('Post:', post);
         postsTab.innerHTML += `
-        <div id="${post.id}" class="container card position-relative post my-2">
-            <div class="row mt-3">
+        <div id="${post.id}" class="container card position-relative post my-2 py-3">
+            <div class="row">
                 <a href="../profile/profile.html?name=${post.owner}" class="profile-link col-2">
-                    <img src="${profile.avatar["url"]}" alt="${profile.avatar["alt"]}" class="profile-img img-fluid rounded-circle float-end">
+                    <img src="${profile.avatar.url}" alt="${profile.avatar.alt}" class="profile-img img-fluid rounded-circle float-end">
                 </a>
                 <div class="col">
                     <div class="d-flex align-items-end gap-2">
@@ -170,13 +172,13 @@ function populatePosts() {
             <div class="row justify-content-start">
                 <div class="col-2"></div>
                 <div class="col-8">
-                    <strong>${post.tags}</strong>
+                    ${post.tags.map(tag => `<span class="badge bg-primary text-black me-1">#${tag}</span>`).join('')}
                 </div>
             </div>
-        </div>
-    `
+        </div>`;
     });
 }
+
 
 function populateFollowers() {
     profile.followers.forEach(follower => {

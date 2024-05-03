@@ -25,7 +25,7 @@ export function buildPostCard(post, isFeed = false) {
             <div class="row justify-content-start">
                 <div class="col-2"></div>
                 <div class="col-8">
-                    <strong>${post.tags}</strong>
+                    ${post.tags.map(tag => `<span class="badge bg-primary text-black me-1">#${tag}</span>`).join('')}
                 </div>
             </div>
             <div class="row mt-2">
