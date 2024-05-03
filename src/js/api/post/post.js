@@ -5,9 +5,10 @@ import { Post } from "../../models/postModel.js";
 export let allPosts = {};
 export let post;
 
-export async function getPosts() {
+export async function getPosts(page = 1) {
     try {
-        const response = await fetch(BASE_URL+SOCIAL_URL+POSTS_URL+"?_author=true&_reactions=true", {
+        let url = `${BASE_URL}${SOCIAL_URL}${POSTS_URL}?_author=true&_reactions=true&page=${page}`;
+        const response = await fetch(url, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
@@ -17,13 +18,14 @@ export async function getPosts() {
         });
         const posts = await response.json();
         allPosts = posts;
-        console.log(allPosts);
+        console.log("Fetched posts:", allPosts);
         return allPosts;
     } catch (error) {
-        console.error("Error fetching posts:", error);
+        console.error("Error fetching posts on page " + page + ":", error);
         throw new Error("Failed to fetch posts. Error: ", error);
     }
 }
+
 
 export async function getPost() {
     const id = new URLSearchParams(window.location.search).get("id");

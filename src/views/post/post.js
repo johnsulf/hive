@@ -55,7 +55,8 @@ function populateEditModal() {
 }
 
 document.addEventListener("DOMContentLoaded", async function () {
-
+    const postProfileLink = document.getElementById("postProfileLink");
+    postProfileLink.href = `../profile/profile.html?name=${loggedInUser.name}`;
     const postSpinner = document.getElementById("postSpinner");
     postSpinner.style.display = 'block';
     await loadPost();

@@ -18,20 +18,19 @@ searchForm.addEventListener("keyup", async function (event) {
 });
 
 document.addEventListener("DOMContentLoaded", async function () {
-
     newPostBtn.innerText += `, ${loggedInUser.name}?`;
-    image.src = `${loggedInUser.avatar.url}`; 
+    image.src = `${loggedInUser.avatar.url}`;
     image.alt = `${loggedInUser.avatar.alt}`;
 
     const feedSpinner = document.getElementById("feedSpinner");
     try {
         feedSpinner.style.display = 'block';
-
-        const fetchedPosts = await getPosts();
+        const fetchedPosts = await getPosts(1);
         console.log("Fetched Posts:", fetchedPosts);
 
         if (fetchedPosts && Array.isArray(fetchedPosts.data)) {
-            populateFeed(fetchedPosts.data); 
+            populateFeed(fetchedPosts.data);
+            updatePagination(fetchedPosts.meta);
         } else {
             console.error("Expected posts to be contained in an array under 'data', received:", fetchedPosts);
         }
@@ -89,6 +88,51 @@ function populateFeed(posts, searchResult = "") {
         feed.innerHTML = searchResult === "" ? "<p>No posts found.</p>" : searchResult.length != 0 && activeFilters.length != 0 ? `<p>No posts found for <i>${searchResult}</i> and filter(s).</p>` : `<p>No posts found for <i>${searchResult}</i>.</p>`;
     }
 }
+
+function updatePagination(meta) {
+    const pagination = document.getElementById('pagination');
+    const ul = pagination.querySelector('.pagination');
+    ul.innerHTML = '';
+
+    if (!meta.isFirstPage && meta.previousPage) {
+        let prev = document.createElement('li');
+        prev.className = 'page-item';
+        prev.innerHTML = `<a class="page-link text-black" href="#">Previous</a>`;
+        prev.addEventListener('click', () => loadPage(meta.previousPage));
+        ul.appendChild(prev);
+    }
+
+    for (let i = 1; i <= meta.pageCount; i++) {
+        let pageItem = document.createElement('li');
+        pageItem.className = `page-item ${i === meta.currentPage ? 'active' : ''}`;
+        pageItem.innerHTML = `<a class="page-link text-black" href="#">${i}</a>`;
+        pageItem.addEventListener('click', () => loadPage(i));
+        ul.appendChild(pageItem);
+    }
+
+    if (!meta.isLastPage && meta.nextPage) {
+        let next = document.createElement('li');
+        next.className = 'page-item';
+        next.innerHTML = `<a class="page-link text-black" href="#">Next</a>`;
+        next.addEventListener('click', () => loadPage(meta.nextPage));
+        ul.appendChild(next);
+    }
+}
+
+async function loadPage(pageNumber) {
+    try {
+        const fetchedPosts = await getPosts(pageNumber);
+        if (fetchedPosts && Array.isArray(fetchedPosts.data)) {
+            populateFeed(fetchedPosts.data);
+            updatePagination(fetchedPosts.meta);
+        } else {
+            console.error("Expected posts to be contained in an array under 'data', received:", fetchedPosts);
+        }
+    } catch (error) {
+        console.error("Error fetching posts:", error);
+    }
+}
+
 
 function applyFiltersAndSearch() {
     let filteredPosts = allPosts.data;
