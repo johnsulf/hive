@@ -1,62 +1,45 @@
 # hive - JS2 Course Assignment
 
-Simple overview of use/purpose.
-
 ## Description
+hive is a project using the [Noroff API](https://docs.noroff.dev/docs/v2/social/posts). It is a social media application.
 
-An in-depth paragraph about your project and overview of use.
+### Key features
+
+TODO
+
+## Built With
+
+This project is crafted using:
+
+- HTML
+- CSS, Bootstrap
+- Vanilla JavaScript
 
 ## Getting Started
 
-### Dependencies
+### Installing and running
 
-* Describe any prerequisites, libraries, OS version, etc., needed before installing program.
-* ex. Windows 10
-
-### Installing
-
-* How/where to download your program
-* Any modifications needed to be made to files/folders
-
-### Executing program
-
-* How to run the program
-* Step-by-step bullets
+1. Clone the repo:
+Open a command window and navigate to destination you want to save the project to. Then run:
+```bash
+git clone https://github.com/johnsulf/hive.git
 ```
-code blocks for commands
+2. Open the project in VS Code or an editor of your choice
+3. Open a terminal at the projects root folder and install dependencies:
+```bash
+npm install
 ```
-
-## Help
-
-Any advise for common problems or issues.
-```
-command to run if program contains helper info
+4. Then run the project:
+```bash
+npm start
 ```
 
-## Authors
+## Contact
 
-Contributors names and contact info
+Any questions about this project? [Send me an email!](mailto:erlendjohns@gmail.com?subject=hive%20repo%20inquiry&body=Hi%20Erlend,%0A%0A)
 
-ex. Dominique Pizzie  
-ex. [@DomPizzie](https://twitter.com/dompizzie)
+## Social Media
 
-## Version History
+[My Twitter profile](https://twitter.com/johnsulf)
 
-* 0.2
-    * Various bug fixes and optimizations
-    * See [commit change]() or See [release history]()
-* 0.1
-    * Initial Release
-
-## License
-
-This project is licensed under the [NAME HERE] License - see the LICENSE.md file for details
-
-## Acknowledgments
-
-Inspiration, code snippets, etc.
-* [awesome-readme](https://github.com/matiassingers/awesome-readme)
-* [PurpleBooth](https://gist.github.com/PurpleBooth/109311bb0361f32d87a2)
-* [dbader](https://github.com/dbader/readme-template)
-* [zenorocha](https://gist.github.com/zenorocha/4526327)
-* [fvcproductions](https://gist.github.com/fvcproductions/1bfc2d4aecb01a834b46)
+[My Facebook profile](https://www.facebook.com/johnsulf)
