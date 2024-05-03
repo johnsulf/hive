@@ -42,7 +42,7 @@ export function buildPostCard(post, isFeed = false) {
 }
 
 //helpers
-function buildImage(media) {
+export function buildImage(media) {
     return media && media.url 
     ? `<img src="${media.url}" alt="${media.alt}" class="img-fluid post-img mb-3">` 
     : "";
@@ -52,7 +52,7 @@ function edited(post) {
     return post.updated !== post.created ? "&nbsp;&nbsp;&nbsp;EDITED" : "";
 }
 
-function buildReactions(post) {
+export function buildReactions(post) {
     return post.reactions.length === 0 
     ?   `<div class="col-1 d-flex fw-bold gap-1">
             <p>${post._count.reactions}</p>

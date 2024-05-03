@@ -25,15 +25,20 @@ function populateUserActions() {
     const userActionsContainer = document.getElementById("userActions");
     userActionsContainer.innerHTML = `
         <div class="gap-2 d-flex justify-content-between">
-            <a class="btn me-2" type="button" href="../feed/feed.html">
+            <button id="backBtn" class="btn me-2" type="button">
                 <i class="bi bi-arrow-left-circle"></i>
                 Back
-            </a>
+            </button>
             ${userActionsHtml}
         </div>
     `;
 
+    document.getElementById("backBtn").addEventListener("click", goBack);
     document.getElementById("editBtn")?.addEventListener("click", populateEditModal);
+}
+
+function goBack() {
+    window.history.back();
 }
 
 function populatePost() {

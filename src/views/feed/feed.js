@@ -7,26 +7,14 @@ const profileLink = document.querySelectorAll(".profile-link");
 const image = document.querySelector("#image");
 const searchForm = document.getElementById("searchForm");
 
-const activeFilters = [];
+let activeFilters = [];
+
+let currentSearchTerm = "";
 
 searchForm.addEventListener("keyup", async function (event) {
     event.preventDefault();
-    const search = document.getElementById("search").value.trim();
-
-    if (!allPosts || !Array.isArray(allPosts.data)) {
-        console.log("No posts loaded or allPosts data is not an array.");
-        return;
-    }
-
-    const filteredPosts = allPosts.data.filter(post => {
-    const titleMatch = post.title.toLowerCase().includes(search.toLowerCase());
-    const bodyMatch = post.body ? post.body.toLowerCase().includes(search.toLowerCase()) : false;
-    const imgAltTextMatch = post.image ? post.image.alt.toLowerCase().includes(search.toLowerCase()) : false;
-    const tagsMatch = post.tags ? post.tags.some(tag => tag.toLowerCase().includes(search.toLowerCase())) : false;
-    const authorMatch = post.author.name.toLowerCase().includes(search.toLowerCase());
-    return titleMatch || bodyMatch || imgAltTextMatch || tagsMatch || authorMatch;
-    });
-    populateFeed(filteredPosts, search);
+    currentSearchTerm = document.getElementById("search").value.trim();
+    applyFiltersAndSearch();
 });
 
 document.addEventListener("DOMContentLoaded", async function () {
@@ -74,7 +62,7 @@ function attachEventListeners() {
     });
 }
 
-function setPostLinks() {
+ function setPostLinks() {
     profileLink.forEach((link) => {
         link.href = `../profile/profile.html?name=${loggedInUser.name}`;
     });    
@@ -98,55 +86,73 @@ function populateFeed(posts, searchResult = "") {
         });
         setPostLinks();
     } else {
-        feed.innerHTML = searchResult === "" ? "<p>No posts found.</p>" : `<p>No posts found for <i>${searchResult}</i>.</p>`;
+        feed.innerHTML = searchResult === "" ? "<p>No posts found.</p>" : searchResult.length != 0 && activeFilters.length != 0 ? `<p>No posts found for <i>${searchResult}</i> and filter(s).</p>` : `<p>No posts found for <i>${searchResult}</i>.</p>`;
     }
+}
+
+function applyFiltersAndSearch() {
+    let filteredPosts = allPosts.data;
+
+    if (currentSearchTerm) {
+        filteredPosts = filteredPosts.filter(post => {
+            const titleMatch = post.title.toLowerCase().includes(currentSearchTerm.toLowerCase());
+            const bodyMatch = post.body ? post.body.toLowerCase().includes(currentSearchTerm.toLowerCase()) : false;
+            const imgAltTextMatch = post.image ? post.image.alt.toLowerCase().includes(currentSearchTerm.toLowerCase()) : false;
+            const tagsMatch = post.tags ? post.tags.some(tag => tag.toLowerCase().includes(currentSearchTerm.toLowerCase())) : false;
+            const authorMatch = post.author.name.toLowerCase().includes(currentSearchTerm.toLowerCase());
+            return titleMatch || bodyMatch || imgAltTextMatch || tagsMatch || authorMatch;
+        });
+    }
+
+    filteredPosts = filteredPosts.filter(post => activeFilters.every(filter => filter(post)));
+
+    populateFeed(filteredPosts, currentSearchTerm);
 }
 
 function addFilter(filterName) {
     const activeFiltersDiv = document.getElementById('activeFilters');
     const span = document.createElement('span');
-    span.classList.add('badge', 'rounded-pill','bg-primary', 'text-black', 'me-1');
+    span.classList.add('badge', 'rounded-pill', 'bg-primary', 'text-black', 'me-1');
     span.textContent = filterName;
 
-    let filterFunc;
+    let filterFunc = determineFilterFunction(filterName);
 
-    if (filterName === "This weeks posts") {
-        filterFunc = post => new Date(post.created) >= new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
-    } else if (filterName === "With reactions") {
-        filterFunc = post => post.reactions && post.reactions.length > 0;
-    } else if (filterName === "With comments") {
-        filterFunc = post => post._count["comments"] != 0;
-    } else if (filterName === "With Images") {
-        filterFunc = post => post.media && post.media.url;
-    } else if (filterName === "Only Text") {
-        filterFunc = post => !post.media;
-    } else if (filterName === "Edited Posts") {
-        filterFunc = post => post.updated !== post.created;
-    } else {
+    if (!filterFunc) {
         console.error("Filter function not defined for: " + filterName);
-        return; 
+        return;
     }
 
     span.onclick = function() {
-        const index = activeFilters.indexOf(filterFunc);
-        if (index > -1) {
-            activeFilters.splice(index, 1);
-        }
+        activeFilters = activeFilters.filter(f => f !== filterFunc);
         this.remove();
-        const filteredPosts = applyFilters(allPosts.data);
-        populateFeed(filteredPosts);
+        applyFiltersAndSearch();
     };
 
-    span.filterFunc = filterFunc;
-    activeFilters.push(filterFunc);
+    if (!activeFilters.includes(filterFunc)) {
+        activeFilters.push(filterFunc);
+        activeFiltersDiv.appendChild(span);
+    }
 
-    activeFiltersDiv.appendChild(span);
-
-    const filteredPosts = applyFilters(allPosts.data);
-    populateFeed(filteredPosts);
+    applyFiltersAndSearch();
 }
 
-function applyFilters(posts) {
-    return posts.filter(post => activeFilters.every(filter => filter(post)));
+function determineFilterFunction(filterName) {
+    switch(filterName) {
+        case "This weeks posts":
+            return post => new Date(post.created) >= new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
+        case "With reactions":
+            return post => post.reactions && post.reactions.length > 0;
+        case "With comments":
+            return post => post._count["comments"] != 0;
+        case "With Images":
+            return post => post.media && post.media.url;
+        case "Only Text":
+            return post => !post.media;
+        case "Edited Posts":
+            return post => post.updated !== post.created;
+        default:
+            return null;
+    }
 }
+
 
