@@ -8,7 +8,6 @@ const image = document.querySelector("#image");
 const searchForm = document.getElementById("searchForm");
 
 let activeFilters = [];
-
 let currentSearchTerm = "";
 
 searchForm.addEventListener("keyup", async function (event) {
@@ -85,7 +84,9 @@ function populateFeed(posts, searchResult = "") {
         });
         setPostLinks();
     } else {
-        feed.innerHTML = searchResult === "" ? "<p>No posts found.</p>" : searchResult.length != 0 && activeFilters.length != 0 ? `<p>No posts found for <i>${searchResult}</i> and filter(s).</p>` : `<p>No posts found for <i>${searchResult}</i>.</p>`;
+        feed.innerHTML = searchResult === "" ? "<p>No posts found.</p>" 
+        : searchResult.length != 0 && activeFilters.length != 0 ? `<p>No posts found for <i>${searchResult}</i> and filter(s).</p>` 
+        : `<p>No posts found for <i>${searchResult}</i>.</p>`;
     }
 }
 
@@ -123,6 +124,8 @@ async function loadPage(pageNumber) {
     try {
         const fetchedPosts = await getPosts(pageNumber);
         if (fetchedPosts && Array.isArray(fetchedPosts.data)) {
+            searchForm.reset();
+            currentSearchTerm = "";
             populateFeed(fetchedPosts.data);
             updatePagination(fetchedPosts.meta);
         } else {

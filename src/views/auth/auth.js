@@ -1,9 +1,11 @@
-import { authFormStates } from "./authFormState.js";
+import { authFormStates } from "../../js/helpers/authFormState.js";
+import { onAuth } from "../../js/api/auth/auth.js";
 
 // holds the current authFormState
 let authFormState = authFormStates[0];
 
 // selectors
+const authForm = document.getElementById("authForm");
 const authFormTitle = document.querySelectorAll(".authFormTitle");
 const usernameContainer = document.getElementById("usernameContainer");
 const authFormActionBtn = document.getElementById("authFormActionBtn");
@@ -13,6 +15,7 @@ const toggleAuthStateBtn = document.getElementById("toggleAuthStateBtn");
 // event listeners
 document.addEventListener("DOMContentLoaded", () => setAuthFormValues());
 toggleAuthStateBtn.addEventListener("click", () => toggleAuthFormState());
+authForm.addEventListener("submit", onAuth);
 
 // helper function
 function setAuthFormValues() {

@@ -11864,6 +11864,7 @@ h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6, .header-font {
   max-height: 4rem;
   aspect-ratio: 1/1;
   object-fit: cover;
+  border-radius: 50%;
 }
 
 .post-img {

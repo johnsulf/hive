@@ -5,7 +5,6 @@ import { buildPostCard } from "../../js/helpers/postCard.js";
 
 async function loadPost() {
     await getPost();
-    console.log("Loaded Post:", post);
 }
 
 function populateUserActions() {
