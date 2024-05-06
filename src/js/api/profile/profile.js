@@ -8,7 +8,6 @@ export let profile;
 
 export async function fetchProfile() {
     const name = new URLSearchParams(window.location.search).get("name");
-
     try {
       const response = await fetch(BASE_URL+SOCIAL_URL+PROFILES_URL+name+"?_followers=true&_following=true&_posts=true", {
             method: "GET",

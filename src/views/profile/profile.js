@@ -1,20 +1,32 @@
-import { profile, fetchProfile, isLoggedInUser, isFollowingUser, followOrUnfollowUser, editProfile } from "../../js/api/profile/profile.js";
+import { profile, fetchProfile, isLoggedInUser, isFollowingUser, followOrUnfollowUser } from "../../js/api/profile/profile.js";
 import { logout } from "../../js/api/auth/auth.js";
 import { formatDateTime } from "../../js/helpers/post/dateTime.js";
 import { buildImage } from "../../js/helpers/post/postCard.js";
+import { updateProfileHandler } from "../../js/helpers/profile/profileHandlers.js";
 
-const nameContainer = document.querySelector('#name');
-const emailContainer = document.querySelector('#email');
-const imageContainer = document.querySelector('#image');
-const bioContainer = document.querySelector('#bio');
-const userActions = document.querySelector('.user-actions');
+const profileContent = document.getElementById('profileContent');
+const profileSpinner = document.getElementById('profileSpinner');
+const nameContainer = document.getElementById('name');
+const emailContainer = document.getElementById('email');
+const imageContainer = document.getElementById('image');
+const bioContainer = document.getElementById('bio');
 const postCountElement = document.getElementById("postCount");
 const followerCountElement = document.getElementById("followerCount");
 const followingCountElement = document.getElementById("followingCount");
 const postsTab = document.getElementById('postsTab');
 const followersTab = document.getElementById('followersTab');
 const followingTab = document.getElementById('followingTab');
+const userActions = document.querySelector('.user-actions');
 
+
+document.addEventListener('DOMContentLoaded', async function() {
+    profileSpinner.style.display = 'block';
+    await loadProfile();
+    profileSpinner.style.display = 'none';
+    profileContent.style.display = 'block';
+    populateTabs();
+    attachListeners();
+});
 
 async function loadProfile() {
     await fetchProfile();
@@ -27,14 +39,7 @@ async function loadProfile() {
     emailContainer.href = `mailto:${profile.email}`;
     imageContainer.src = profile.avatar.url;
 
-    populatePosts();
-
-    const posts = document.querySelectorAll(".post");
-    posts.forEach((post) => {
-        post.addEventListener("click", function () {
-            window.location.href = `../post/post.html?id=${post.id}`;
-        });
-    });
+    populateUserPosts();
 
     if (profile.bio) {
         bioContainer.innerHTML = profile.bio;
@@ -91,9 +96,7 @@ async function loadProfile() {
     }
 }
 
-loadProfile();
-
-document.addEventListener('DOMContentLoaded', function() {
+function populateTabs() {
     const tabs = document.querySelectorAll('#profileTabs .nav-link');
     const tabContents = document.querySelectorAll('.tab-content > div');
 
@@ -114,7 +117,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
             switch(activeTab) {
                 case 'postsTab':
-                    populatePosts(); 
+                    populateUserPosts(); 
                     break;
                 case 'followersTab':
                     populateFollowers(); 
@@ -125,26 +128,23 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     });
+}
 
+function attachListeners() {
     const editProfileForm = document.getElementById('editProfileForm');
-    editProfileForm.addEventListener('submit', async function(event) {
-        event.preventDefault();
-        const bio = document.getElementById('profileBio').value;
-        const avatarUrl = document.getElementById('profileImgUrl').value;
-        const avatarAlt = document.getElementById('profileImgAlt').value;
-        const data = {
-            bio: bio,
-            avatar: {
-                url: avatarUrl,
-                alt: avatarAlt
-            }
-        };
-        await editProfile(data);
-        window.location.reload();
+    editProfileForm.addEventListener('submit', async function(e) {
+        await updateProfileHandler(e);
     });
-});
 
-function populatePosts() {
+    const posts = document.querySelectorAll(".post");
+    posts.forEach((post) => {
+        post.addEventListener("click", function () {
+            window.location.href = `../post/post.html?id=${post.id}`;
+        });
+    });
+}
+
+function populateUserPosts() {
     postsTab.innerHTML = '';
     profile.posts.forEach(post => {
         console.log('Post:', post);
@@ -178,7 +178,6 @@ function populatePosts() {
         </div>`;
     });
 }
-
 
 function populateFollowers() {
     profile.followers.forEach(follower => {

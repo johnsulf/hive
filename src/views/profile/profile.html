@@ -29,55 +29,62 @@
         </nav>
     </header>
     <main>
-        <div class="container-sm">
-            <div class="row">
-                <div class="col">
-                    <div class="d-flex flex-column">
-                        <p id="name" class="fw-bold"></p>
-                        <a id="email" class="text-muted" href=""></a>
-                        <p id="bio" class="text-muted mt-2"></p>
+        <section id="profile">
+            <div id="profileSpinner" class="text-center" style="display: none;">
+                <div class="spinner-border text-primary" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+            </div>
+            <div id="profileContent" style="display: none;" class="container-sm">
+                <div class="row">
+                    <div class="col">
+                        <div class="d-flex flex-column">
+                            <p id="name" class="fw-bold"></p>
+                            <a id="email" class="text-muted" href=""></a>
+                            <p id="bio" class="text-muted mt-2"></p>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <img id="image" src="" alt="profile image"
+                            class="img-fluid rounded-circle float-end ">
                     </div>
                 </div>
-                <div class="col">
-                    <img id="image" src="" alt="profile image"
-                        class="img-fluid rounded-circle float-end ">
+                <div class="row user-actions"></div>
+                <div class="row">
+                    <ul class="nav nav-tabs justify-content-center" id="profileTabs">
+                        <li class="nav-item">
+                            <a class="nav-link active position-relative" href="#" data-tab="postsTab">
+                                Posts
+                                <span id="postCount" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-primary text-black">
+                                    0
+                                </span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link position-relative" href="#" data-tab="followersTab">
+                                Followers
+                                <span id="followerCount" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-primary text-black">
+                                    0
+                                </span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link position-relative" href="#" data-tab="followingTab">
+                                Following
+                                <span id="followingCount" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-primary text-black">
+                                    0
+                                </span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="tab-content">
+                    <div id="postsTab" class="tab-pane fade show active"></div>
+                    <div id="followersTab" class="tab-pane fade"></div>
+                    <div id="followingTab" class="tab-pane fade"></div>
                 </div>
             </div>
-            <div class="row user-actions"></div>
-            <div class="row">
-                <ul class="nav nav-tabs justify-content-center" id="profileTabs">
-                    <li class="nav-item">
-                        <a class="nav-link active position-relative" href="#" data-tab="postsTab">
-                            Posts
-                            <span id="postCount" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-primary text-black">
-                                0
-                            </span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link position-relative" href="#" data-tab="followersTab">
-                            Followers
-                            <span id="followerCount" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-primary text-black">
-                                0
-                            </span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link position-relative" href="#" data-tab="followingTab">
-                            Following
-                            <span id="followingCount" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-primary text-black">
-                                0
-                            </span>
-                        </a>
-                    </li>
-                </ul>
-            </div>
-            <div class="tab-content">
-                <div id="postsTab" class="tab-pane fade show active"></div>
-                <div id="followersTab" class="tab-pane fade"></div>
-                <div id="followingTab" class="tab-pane fade"></div>
-            </div>
-        </div>
+        </section>
     </main>
     <footer></footer>
 
