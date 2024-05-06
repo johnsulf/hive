@@ -1,20 +1,14 @@
-import { loggedInUser } from "../../js/helpers/constants.js";
-import { getPosts, createPost, allPosts } from "../../js/api/post/post.js";
-import { buildPostCard } from "../../js/helpers/postCard.js";
+import { loggedInUser } from "../../js/helpers/shared/constants.js";
+import { getPosts, allPosts } from "../../js/api/post/post.js";
+import { buildPostCard } from "../../js/helpers/post/postCard.js";
+import { createPostHandler } from "../../js/helpers/post/postHandlers.js";
 
 const newPostBtn = document.querySelector(".new-post-btn");
 const profileLink = document.querySelectorAll(".profile-link");
 const image = document.querySelector("#image");
-const searchForm = document.getElementById("searchForm");
 
 let activeFilters = [];
 let currentSearchTerm = "";
-
-searchForm.addEventListener("keyup", async function (event) {
-    event.preventDefault();
-    currentSearchTerm = document.getElementById("search").value.trim();
-    applyFiltersAndSearch();
-});
 
 document.addEventListener("DOMContentLoaded", async function () {
     newPostBtn.innerText += `, ${loggedInUser.name}?`;
@@ -25,7 +19,6 @@ document.addEventListener("DOMContentLoaded", async function () {
     try {
         feedSpinner.style.display = 'block';
         const fetchedPosts = await getPosts(1);
-        console.log("Fetched Posts:", fetchedPosts);
 
         if (fetchedPosts && Array.isArray(fetchedPosts.data)) {
             populateFeed(fetchedPosts.data);
@@ -46,8 +39,15 @@ document.addEventListener("DOMContentLoaded", async function () {
 function attachEventListeners() {
     const newPostForm = document.getElementById("newPostForm");
     newPostForm.addEventListener("submit", async function (event) {
-        await createPost(event);
+        await createPostHandler(event);
         window.location.reload();
+    });
+
+    const searchForm = document.getElementById("searchForm");
+    searchForm.addEventListener("keyup", async function (event) {
+        event.preventDefault();
+        currentSearchTerm = document.getElementById("search").value.trim();
+        applyFiltersAndSearch();
     });
 
     const filterItems = document.querySelectorAll('.dropdown-item');
@@ -60,7 +60,7 @@ function attachEventListeners() {
     });
 }
 
- function setPostLinks() {
+function setPostLinks() {
     profileLink.forEach((link) => {
         link.href = `../profile/profile.html?name=${loggedInUser.name}`;
     });    

@@ -1,5 +1,5 @@
-import { BASE_URL, AUTH_URL, REGISTER_URL, LOGIN_URL } from "../../helpers/constants.js";
-import { saveToLocalStorage } from "../../helpers/localStorage.js";
+import { BASE_URL, AUTH_URL, REGISTER_URL, LOGIN_URL } from "../../helpers/shared/constants.js";
+import { saveToLocalStorage } from "../../helpers/shared/localStorage.js";
 
 const authSpinner = document.getElementById("authSpinner");
 const submitButton = document.getElementById("authFormActionBtn");

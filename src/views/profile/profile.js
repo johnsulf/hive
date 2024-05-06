@@ -1,7 +1,7 @@
 import { profile, fetchProfile, isLoggedInUser, isFollowingUser, followOrUnfollowUser, editProfile } from "../../js/api/profile/profile.js";
 import { logout } from "../../js/api/auth/auth.js";
-import { formatDateTime } from "../../js/helpers/dateTime.js";
-import { buildImage } from "../../js/helpers/postCard.js";
+import { formatDateTime } from "../../js/helpers/post/dateTime.js";
+import { buildImage } from "../../js/helpers/post/postCard.js";
 
 const nameContainer = document.querySelector('#name');
 const emailContainer = document.querySelector('#email');

@@ -1,4 +1,4 @@
-import { authFormStates } from "../../js/helpers/authFormState.js";
+import { authFormStates } from "../../js/helpers/auth/authFormState.js";
 import { onAuth } from "../../js/api/auth/auth.js";
 
 // holds the current authFormState

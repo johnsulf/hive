@@ -1,11 +1,24 @@
-import { post, getPost, postComment } from "../../js/api/post/post.js";
-import { loggedInUser } from "../../js/helpers/constants.js";
-import { deletePost, updatePost } from "../../js/api/post/post.js";
-import { buildPostCard } from "../../js/helpers/postCard.js";
+import { post, getPost } from "../../js/api/post/post.js";
+import { loggedInUser } from "../../js/helpers/shared/constants.js";
+import { deletePost } from "../../js/api/post/post.js";
+import { buildPostCard } from "../../js/helpers/post/postCard.js";
+import { postCommentHandler, updatePostHandler } from "../../js/helpers/post/postHandlers.js";
+import { goBack } from "../../js/helpers/shared/utils.js";
 
-async function loadPost() {
+const postProfileLink = document.getElementById("postProfileLink");
+const postSpinner = document.getElementById("postSpinner");
+const postContainer = document.getElementById("post");
+
+document.addEventListener("DOMContentLoaded", async function () {
+    postProfileLink.href = `../profile/profile.html?name=${loggedInUser.name}`;
+    postSpinner.style.display = 'block';
     await getPost();
-}
+    postSpinner.style.display = 'none';
+    postContainer.innerHTML = buildPostCard(post, false);
+    populateUserActions();
+    attachEventListeners();
+
+});
 
 function populateUserActions() {
     let userActionsHtml = post.author.name === loggedInUser.name ? `
@@ -36,33 +49,7 @@ function populateUserActions() {
     document.getElementById("editBtn")?.addEventListener("click", populateEditModal);
 }
 
-function goBack() {
-    window.history.back();
-}
-
-function populatePost() {
-    const postContainer = document.getElementById("post");
-    postContainer.innerHTML = buildPostCard(post, false);
-}
-
-function populateEditModal() {
-    document.getElementById("postTitle").value = post.title || '';
-    document.getElementById("postBody").value = post.body || '';
-    document.getElementById("postTags").value = post.tags.join(', ') || '';
-    document.getElementById("mediaUrl").value = post.mediaUrl || '';
-    document.getElementById("mediaAlt").value = post.mediaAlt || '';
-}
-
-document.addEventListener("DOMContentLoaded", async function () {
-    const postProfileLink = document.getElementById("postProfileLink");
-    postProfileLink.href = `../profile/profile.html?name=${loggedInUser.name}`;
-    const postSpinner = document.getElementById("postSpinner");
-    postSpinner.style.display = 'block';
-    await loadPost();
-    postSpinner.style.display = 'none';
-    populatePost();
-    populateUserActions();
-
+function attachEventListeners() {    
     if (post.author.name === loggedInUser.name) {
         const deleteButton = document.querySelector("#deleteBtn");
         deleteButton.addEventListener("click", async function () {
@@ -73,15 +60,21 @@ document.addEventListener("DOMContentLoaded", async function () {
 
     const editPostForm = document.querySelector("#editPostForm");
     editPostForm.addEventListener("submit", async function (e) {
-        e.preventDefault();
-        await updatePost(e);
+        await updatePostHandler(e);
         window.location.reload();
     });
 
     const commentForm = document.querySelector(".comment-form");
     commentForm.addEventListener("submit", async function (e) {
-        e.preventDefault();
-        await postComment(e);
+        await postCommentHandler(e);
         window.location.reload();
     });
-});
+}
+
+function populateEditModal() {
+    document.getElementById("postTitle").value = post.title || '';
+    document.getElementById("postBody").value = post.body || '';
+    document.getElementById("postTags").value = post.tags.join(', ') || '';
+    document.getElementById("mediaUrl").value = post.mediaUrl || '';
+    document.getElementById("mediaAlt").value = post.mediaAlt || '';
+}
