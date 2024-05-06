@@ -2,6 +2,7 @@ import { profile, fetchProfile, isLoggedInUser, isFollowingUser, followOrUnfollo
 import { logout } from "../../js/api/auth/auth.js";
 import { formatDateTime } from "../../js/helpers/post/dateTime.js";
 import { buildImage } from "../../js/helpers/post/postCard.js";
+import { goBack } from "../../js/helpers/shared/utils.js";
 import { updateProfileHandler } from "../../js/helpers/profile/profileHandlers.js";
 
 const profileContent = document.getElementById('profileContent');
@@ -142,6 +143,9 @@ function attachListeners() {
             window.location.href = `../post/post.html?id=${post.id}`;
         });
     });
+
+    const backButton = document.getElementById("backBtn");
+    backButton.addEventListener("click", goBack);
 }
 
 function populateUserPosts() {
