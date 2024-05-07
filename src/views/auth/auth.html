@@ -27,24 +27,24 @@
                     <form class="card bg-white p-4 gap-4" id="authForm">
                         <h2 class="authFormTitle">Sign Up</h2>
                         <div id="usernameContainer">
-                            <label for="username">username</label>
-                            <input type="text" id="username" name="username" class="form-control">
+                            <label for="username">Username</label>
+                            <input type="text" id="username" name="username" class="form-control" 
+                            pattern="^[a-zA-Z0-9_]+$" title="Username can only contain alphanumeric characters and underscores." required>
+                        </div>
+                        
+                        <div>
+                            <label for="email">Noroff Email</label>
+                            <input type="email" id="email" name="email" class="form-control" 
+                                pattern=".+@(stud\.)?noroff\.no" title="A Noroff Email must end with `@noroff.no` or `@stud.noroff.no`" required>
                         </div>
                         <div>
-                            <label for="email">noroff email</label>
-                            <input type="email" id="email" name="email" class="form-control"
-                                pattern=".+@(stud\.)?noroff\.no" required>
-                        </div>
-                        <div>
-                            <label for="password">password</label>
+                            <label for="password">Password</label>
                             <input type="password" id="password" name="password" class="form-control" minlength="8"
                                 required>
                         </div>
                         <button type="submit" class="btn btn-primary" id="authFormActionBtn">
                             Sign Up
-                            <span class="spinner-border spinner-border-sm" style="display:none;" id="authSpinner" aria-hidden="true"></span>
-                        </button>
-                        <div id="authFormFeedback" class="alert alert-danger" style="display:none;"></div>                        
+                        </button>                       
                         <hr />
                         <div class="text-center">
                             <p id="toggleAuthStateIntro">Allready have an account?</p>

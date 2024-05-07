@@ -31,6 +31,11 @@ function setAuthFormValues() {
 function toggleAuthFormState() {
     const isSignup = authFormState.state === "signup";
     authFormState = authFormStates[isSignup ? 1 : 0];
-    usernameContainer.style.display = isSignup ? "none" : "block"; 
+    usernameContainer.style.display = isSignup ? "none" : "block";
+
+    const usernameInput = document.getElementById("username");
+    usernameInput.required = !isSignup;
+    console.log('usernameInput:', usernameInput);
+
     setAuthFormValues();
 }

@@ -2,7 +2,7 @@ import { formatDateTime } from "./dateTime.js";
 
 export function buildPostCard(post, isFeed = false) {
     return `
-        <div id="${post.id}" class="container card position-relative post my-3">
+        <div id="${post.id}" class="container card position-relative post my-3 bg-white ${isFeed ? '' : 'post-view'}">
             <div class="row mt-3">
                 <a href="../profile/profile.html?name=${post.author.name}" class="profile-link col-2">
                     <img src="${post.author.avatar["url"]}" alt="${post.author.avatar["alt"]}" class="profile-img img-fluid rounded-circle float-end">

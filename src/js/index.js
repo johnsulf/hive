@@ -1,4 +1,4 @@
-import { userToken } from '../js/helpers/constants.js';
+import { userToken } from '../js/helpers/shared/constants.js';
 
 // Redirect to the feed page if the user is logged in, otherwise redirect to the login page
 

@@ -38,15 +38,13 @@ h1, h2, h3, h4, h5, h6, .header-font {
   cursor: pointer;
 }
 
-
 .post-img {
   width: 100%;
   object-fit: contain;
 }
 
-.post {
+.post:not(.post-view) {
   cursor: pointer;
-  background-color: #fff;
 }
 
 .comment {
