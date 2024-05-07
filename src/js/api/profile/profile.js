@@ -1,5 +1,6 @@
 import { API_KEY, BASE_URL, SOCIAL_URL, PROFILES_URL, loggedInUser } from "../../helpers/shared/constants.js";
 import { getFromLocalStorage } from "../../helpers/shared/localStorage.js";
+import { reloadPage } from "../../helpers/shared/utils.js";
 import { Profile } from "../../models/profileModel.js";
 
 export let isLoggedInUser = false;
@@ -36,6 +37,7 @@ export async function followOrUnfollowUser(followOrUnfollow) {
                 "Content-Type": "application/json"
             },
         });
+        reloadPage();
     }
     catch (e) {
         console.error("Error following user:", e);
