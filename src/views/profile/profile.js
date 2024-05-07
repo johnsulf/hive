@@ -146,6 +146,11 @@ function attachListeners() {
 
     const backButton = document.getElementById("backBtn");
     backButton.addEventListener("click", goBack);
+
+    const zoomProfileIimgSrc = document.getElementById("zoomProfileImg");
+    imageContainer.addEventListener("click", function() {
+        zoomProfileIimgSrc.src = profile.avatar.url;
+    });
 }
 
 function populateUserPosts() {
