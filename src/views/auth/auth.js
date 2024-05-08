@@ -1,4 +1,4 @@
-import { authFormStates } from "../../js/helpers/authFormState.js";
+import { authFormStates } from "../../js/helpers/auth/authFormState.js";
 import { onAuth } from "../../js/api/auth/auth.js";
 
 // holds the current authFormState
@@ -31,6 +31,11 @@ function setAuthFormValues() {
 function toggleAuthFormState() {
     const isSignup = authFormState.state === "signup";
     authFormState = authFormStates[isSignup ? 1 : 0];
-    usernameContainer.style.display = isSignup ? "none" : "block"; 
+    usernameContainer.style.display = isSignup ? "none" : "block";
+
+    const usernameInput = document.getElementById("username");
+    usernameInput.required = !isSignup;
+    console.log('usernameInput:', usernameInput);
+
     setAuthFormValues();
 }

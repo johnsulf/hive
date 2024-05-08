@@ -1,5 +1,6 @@
-import { API_KEY, BASE_URL, SOCIAL_URL, PROFILES_URL, loggedInUser } from "../../helpers/constants.js";
-import { getFromLocalStorage } from "../../helpers/localStorage.js";
+import { API_KEY, BASE_URL, SOCIAL_URL, PROFILES_URL, loggedInUser } from "../../helpers/shared/constants.js";
+import { getFromLocalStorage } from "../../helpers/shared/localStorage.js";
+import { reloadPage } from "../../helpers/shared/utils.js";
 import { Profile } from "../../models/profileModel.js";
 
 export let isLoggedInUser = false;
@@ -8,7 +9,6 @@ export let profile;
 
 export async function fetchProfile() {
     const name = new URLSearchParams(window.location.search).get("name");
-
     try {
       const response = await fetch(BASE_URL+SOCIAL_URL+PROFILES_URL+name+"?_followers=true&_following=true&_posts=true", {
             method: "GET",
@@ -20,11 +20,8 @@ export async function fetchProfile() {
         });
         const json = await response.json();
         profile = Profile.fromJson(json);
-        console.log("Profile:", profile);
         isLoggedInUser = loggedInUser.name === profile.name;
         isFollowingUser = profile.followers.some(follower => follower.name === loggedInUser.name);
-        console.log("isLoggedInUser:", isLoggedInUser);
-        console.log("isFollowingUser:", isFollowingUser);
     } catch (e) {
         console.error("Error fetching profile:", e);
     }
@@ -32,7 +29,7 @@ export async function fetchProfile() {
 
 export async function followOrUnfollowUser(followOrUnfollow) {
     try {
-        const response = await fetch(BASE_URL+SOCIAL_URL+PROFILES_URL+profile.name+"/"+followOrUnfollow, {
+        await fetch(BASE_URL+SOCIAL_URL+PROFILES_URL+profile.name+"/"+followOrUnfollow, {
             method: "PUT",
             headers: {
                 "Authorization": "Bearer " + getFromLocalStorage("token"),
@@ -40,9 +37,7 @@ export async function followOrUnfollowUser(followOrUnfollow) {
                 "Content-Type": "application/json"
             },
         });
-        const json = await response.json();
-        console.log(followOrUnfollow + " user:", json);
-        profile = Profile.fromJson(json);
+        reloadPage();
     }
     catch (e) {
         console.error("Error following user:", e);
@@ -61,7 +56,6 @@ export async function editProfile(data) {
             body: JSON.stringify(data)
         });
         const json = await response.json();
-        console.log("Edit Profile Response:", json);
         profile = Profile.fromJson(json);
     }
     catch (e) {

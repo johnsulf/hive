@@ -28,7 +28,14 @@ h1, h2, h3, h4, h5, h6, .header-font {
   max-height: 4rem;
   aspect-ratio: 1/1;
   object-fit: cover;
-  border-radius: 50%;
+}
+
+.lg {
+  max-height: 6rem;
+}
+
+.zoom {
+  cursor: pointer;
 }
 
 .post-img {
@@ -36,9 +43,8 @@ h1, h2, h3, h4, h5, h6, .header-font {
   object-fit: contain;
 }
 
-.post {
+.post:not(.post-view) {
   cursor: pointer;
-  background-color: #fff;
 }
 
 .comment {

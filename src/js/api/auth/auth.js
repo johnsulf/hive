@@ -1,22 +1,21 @@
-import { BASE_URL, AUTH_URL, REGISTER_URL, LOGIN_URL } from "../../helpers/constants.js";
-import { saveToLocalStorage } from "../../helpers/localStorage.js";
+import { BASE_URL, AUTH_URL, REGISTER_URL, LOGIN_URL } from "../../helpers/shared/constants.js";
+import { saveToLocalStorage } from "../../helpers/shared/localStorage.js";
+import { showToast } from "../../helpers/shared/errorToast.js";
 
-const authSpinner = document.getElementById("authSpinner");
 const submitButton = document.getElementById("authFormActionBtn");
 
 /**
- * Register a new user
- * @param {string} name Users desired name
- * @param {string} email Users noroff email
- * @param {string} password Users password
- * @returns {Promise <{data: {name: string, email: string, id: string}}> | Error} user object or error
- * ```js
- * const name = "John Doe";
- * const email = "johndoe@example.com";
- * const password = "password1234";
- * const result = await register(name, email, password);
- * console.log(result); // {data: {name: "John Doe", email: "johndoe@example.com", id: "60f7c9f4c6b4f40015f6b3b4"}}
- * ```
+ * Registers a new user using the Noroff API
+ * @param {string} name 
+ * @param {string} email 
+ * @param {string} password
+ * 
+ * @returns {Promise}
+ * @throws {Error}
+ * 
+ * @example
+ * import { register } from "./api/auth/auth.js";
+ * register("John Doe", "johndoe@example.com, "password123");
  */
 async function register(name, email, password) {
     try {
@@ -28,10 +27,14 @@ async function register(name, email, password) {
             body: JSON.stringify({ name, email, password }),
         });
         const result = await response.json();
-        console.log("result: ", result);
+
+        if (!response.ok) {
+            showToast(result.errors[0].message || "Failed to register.", true);
+            throw new Error(result.errors[0].message || "Registration failed.");
+        }
+
         return result;
     } catch (error) {
-        console.error(error);
         throw new Error("Failed to register user. Error: ", error);
     }
 }
@@ -46,12 +49,12 @@ async function login(email, password) {
             body: JSON.stringify({ email, password }),
         });
 
-        if (!response.ok) {
-            throw new Error("Login failed: " + response.statusText);
-        }
-
         const json = await response.json(); 
-        console.log("json: ", json);
+
+        if (!response.ok) {
+            showToast(json.errors[0].message || "Login failed.", true);
+            throw new Error("Login failed: " + json.errors[0].message || response.statusText);
+        }
 
         const { accessToken, ...profile } = json.data; 
         saveToLocalStorage("token", accessToken);
@@ -60,7 +63,6 @@ async function login(email, password) {
         window.location.replace("/views/feed/feed.html");
         return profile;
     } catch (error) {
-        console.error("Failed to login user. Error: ", error);
         throw new Error("Failed to login user. Error: ", error);
     }
 }
@@ -78,7 +80,6 @@ export async function onAuth(event) {
     const password = document.getElementById("password").value;
     const buttonAction = event.submitter.innerText;
 
-    authSpinner.style.display = 'inline-block';
     submitButton.disabled = true;
 
     try {
@@ -90,9 +91,8 @@ export async function onAuth(event) {
             await login(email, password);
         }
     } catch ( error ) {
-        console.error("Authentication error:", error.message);
+        throw new Error("Authentication error:", error.message);
     } finally {
-        authSpinner.style.display = 'none';
         submitButton.disabled = false;
     }
 }
