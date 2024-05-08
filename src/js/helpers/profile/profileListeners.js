@@ -1,7 +1,7 @@
 import { goBack } from "../shared/utils.js"; 
 import { updateProfileHandler } from "../profile/profileHandlers.js";
 import { profile } from "../../api/profile/profile.js";
-import { setPostLink } from "../post/postLink.js";
+import { setPostLink } from "../shared/postCard.js";
 
 export function attachListeners() {
     const editProfileForm = document.getElementById('editProfileForm');

@@ -5,7 +5,6 @@ import { populateTabs } from "../../js/helpers/profile/profileTabs.js";
 import { populateUserPosts } from "../../js/helpers/profile/profilePosts.js";
 import { attachListeners } from "../../js/helpers/profile/profileListeners.js";
 import { loadingView } from "../../js/helpers/shared/loadingView.js";
-import { showToast } from "../../js/helpers/shared/errorToast.js";
 
 document.addEventListener('DOMContentLoaded', async () => await loadProfile());
 

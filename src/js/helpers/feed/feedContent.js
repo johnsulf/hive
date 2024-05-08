@@ -1,5 +1,4 @@
-import { buildPostCard } from "../post/postCard.js";
-import { setPostLink } from "../post/postLink.js";
+import { buildPostCard, setPostLink } from "../shared/postCard.js";
 import { activeFilters } from "../feed/feedSearchAndFilter.js";
 
 export function populateFeed(posts, searchResult = "") {

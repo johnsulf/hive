@@ -1,5 +1,4 @@
-import { formatDateTime } from "../post/dateTime.js";
-import { buildImage } from "../post/postCard.js";
+import { buildImage, formatDateTime } from "../shared/postCard.js";
 import { profile } from "../../api/profile/profile.js";
 
 export function populateUserPosts() {
