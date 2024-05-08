@@ -1,5 +1,6 @@
 import { followOrUnfollowUser } from '../../api/profile/profile.js';
 import { logout } from '../../api/auth/auth.js';
+import { profile } from '../../api/profile/profile.js';
 
 export function setUserActions(isLoggedInUser, isFollowingUser) {    
     const userActions = document.querySelector('.user-actions');
@@ -40,7 +41,7 @@ export function setUserActions(isLoggedInUser, isFollowingUser) {
 
 function attachListeners(isLoggedInUser, isFollowingUser) {
     if (isLoggedInUser) {
-        document.getElementById('editProfile').addEventListener('click', () => populateEditModal);
+        document.getElementById('editProfile').addEventListener('click', () => populateEditModal());
         document.getElementById('logOut').addEventListener('click', () => logout());
     } else {
         isFollowingUser ? 
