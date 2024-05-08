@@ -3,14 +3,14 @@ import { setUserActions } from "../../js/helpers/profile/profileUserActions.js";
 import { displayProfileInfo } from "../../js/helpers/profile/profileInfo.js";
 import { populateTabs } from "../../js/helpers/profile/profileTabs.js";
 import { populateUserPosts } from "../../js/helpers/profile/profilePosts.js";
-import { setPostLink } from "../../js/helpers/post/postLink.js";
 import { attachListeners } from "../../js/helpers/profile/profileListeners.js";
-import { toggleSpinnerAndView } from "../../js/helpers/profile/profileLoading.js";
+import { loadingView } from "../../js/helpers/shared/loadingView.js";
+import { showToast } from "../../js/helpers/shared/errorToast.js";
 
 document.addEventListener('DOMContentLoaded', async () => await loadProfile());
 
 async function loadProfile() {
-        toggleSpinnerAndView(true);
+        loadingView(true, "profileContent", "profileSpinner");
 
         await fetchProfile();
 
@@ -20,5 +20,5 @@ async function loadProfile() {
         populateTabs();
         attachListeners();
 
-        toggleSpinnerAndView(false);
+        loadingView(false, "profileContent", "profileSpinner");
 }
