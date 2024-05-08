@@ -1,20 +1,14 @@
-import { loggedInUser } from "../../js/helpers/shared/constants.js";
 import { getPosts, allPosts } from "../../js/api/post/post.js";
 import { buildPostCard } from "../../js/helpers/post/postCard.js";
 import { createPostHandler } from "../../js/helpers/post/postHandlers.js";
-
-const newPostBtn = document.querySelector(".new-post-btn");
-const profileLink = document.querySelectorAll(".profile-link");
-const image = document.querySelector("#image");
+import { setPostLink } from "../../js/helpers/post/postLink.js";
+import { populateFeedTopArea } from "../../js/helpers/feed/feedTopArea.js";
 
 let activeFilters = [];
 let currentSearchTerm = "";
 
 document.addEventListener("DOMContentLoaded", async function () {
-    newPostBtn.innerText += `, ${loggedInUser.name}?`;
-    image.src = `${loggedInUser.avatar.url}`;
-    image.alt = `${loggedInUser.avatar.alt}`;
-
+    populateFeedTopArea();
     const feedSpinner = document.getElementById("feedSpinner");
     try {
         feedSpinner.style.display = 'block';
@@ -34,7 +28,6 @@ document.addEventListener("DOMContentLoaded", async function () {
 
     attachEventListeners();
 });
-
 
 function attachEventListeners() {
     const newPostForm = document.getElementById("newPostForm");
@@ -60,19 +53,6 @@ function attachEventListeners() {
     });
 }
 
-function setPostLinks() {
-    profileLink.forEach((link) => {
-        link.href = `../profile/profile.html?name=${loggedInUser.name}`;
-    });    
-    
-    const posts = document.querySelectorAll(".post");
-    posts.forEach((post) => {
-        post.addEventListener("click", function () {
-            window.location.href = `../post/post.html?id=${post.id}`;
-        });
-    });
-}
-
 function populateFeed(posts, searchResult = "") {
     const feed = document.getElementById("feed");
     feed.innerHTML = "";
@@ -82,7 +62,7 @@ function populateFeed(posts, searchResult = "") {
         posts.forEach((post) => {
             feed.innerHTML += buildPostCard(post, true);
         });
-        setPostLinks();
+        setPostLink();
     } else {
         feed.innerHTML = searchResult === "" ? "<p>No posts found.</p>" 
         : searchResult.length != 0 && activeFilters.length != 0 ? `<p>No posts found for <i>${searchResult}</i> and filter(s).</p>` 

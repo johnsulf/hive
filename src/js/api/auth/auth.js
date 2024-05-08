@@ -1,6 +1,6 @@
 import { BASE_URL, AUTH_URL, REGISTER_URL, LOGIN_URL } from "../../helpers/shared/constants.js";
 import { saveToLocalStorage } from "../../helpers/shared/localStorage.js";
-import { showToast } from "../../helpers/auth/authToast.js";
+import { showToast } from "../../helpers/shared/errorToast.js";
 
 const submitButton = document.getElementById("authFormActionBtn");
 
