@@ -5,7 +5,7 @@ import { loggedInUser } from "../shared/constants.js";
 export function populateUserActions() {
     let userActionsHtml = post.author.name === loggedInUser.name ? `
         <div class="d-grid gap-2 d-flex justify-content-end">
-            <button id="editBtn" class="btn btn-secondary me-2" type="button" data-bs-toggle="modal" data-bs-target="#editPostModal">
+            <button id="editBtn" class="btn btn-secondary me-2 text-white" type="button" data-bs-toggle="modal" data-bs-target="#editPostModal">
                 <i class="bi bi-pencil-fill"></i>
                 Edit
             </button>
@@ -33,9 +33,10 @@ export function populateUserActions() {
 }
 
 function populateEditModal() {
+    console.log(post);
     document.getElementById("postTitle").value = post.title || '';
     document.getElementById("postBody").value = post.body || '';
     document.getElementById("postTags").value = post.tags.join(', ') || '';
-    document.getElementById("mediaUrl").value = post.mediaUrl || '';
-    document.getElementById("mediaAlt").value = post.mediaAlt || '';
+    document.getElementById("mediaUrl").value = post.media["url"] || '';
+    document.getElementById("mediaAlt").value = post.media["alt"] || '';
 }

@@ -49,7 +49,7 @@
                 <form id="searchForm">
                     <div class="input-group">
                         <input id="search" type="text" class="form-control bg-white" placeholder="Search in authors, titles, text, images and tags"
-                            aria-label="Search for buzz" aria-describedby="search-button">
+                            aria-label="Search for post" aria-describedby="search-button">
                     </div>
                 </form>                
             </div>
@@ -93,12 +93,12 @@
     
     <footer></footer>
 
-    <!-- New Buzz Modal -->
+    <!-- New Post Modal -->
     <div class="modal fade" id="newPostModal" tabindex="-1" aria-labelledby="newPostModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="newPostModalLabel">New Buzz</h1>
+                    <h1 class="modal-title fs-5" id="newPostModalLabel">New Post</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -106,7 +106,7 @@
                         <!-- Title input -->
                         <div class="mb-3">
                             <label for="postTitle" class="form-label">Title</label>
-                            <input type="text" class="form-control" id="postTitle" name="title" required placeholder="Enter the title of your Buzz">
+                            <input type="text" class="form-control" id="postTitle" name="title" required placeholder="Enter the title of your post">
                         </div>
 
                         <!-- Body input -->
@@ -136,7 +136,7 @@
                         <!-- Submit Button -->
                         <div class="modal-footer">
                             <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
-                            <button type="submit" class="btn btn-primary" id="createBtn">Create Buzz
+                            <button type="submit" class="btn btn-primary" id="createBtn">Create Post
                                 <span class="spinner-border spinner-border-sm" style="display:none;" id="createSpinner" aria-hidden="true"></span>
                             </button>
                         </div>

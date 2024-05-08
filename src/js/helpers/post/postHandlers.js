@@ -4,6 +4,7 @@ let postData;
  
 export async function createPostHandler(event) {
     event.preventDefault(); 
+
     setModalElementsAndData();
     handleSpinnerAndButton("create", "inline-block", true);
 
@@ -47,7 +48,7 @@ function setModalElementsAndData() {
         body: body,
         tags: tags
     };
-
+    
     if (mediaUrl) {
         postData.media = {
             url: mediaUrl,
