@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>hive | log in or register</title>
+    <link rel="stylesheet" href="../../styles/css/styles.css">
+    <link rel="stylesheet" href="auth.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <link rel="shortcut icon" href="../../assets/favicon.png" type="image/x-icon">
+</head>
+
+<body>
+    <main>
+        <div class="container-md text-bg-primary p-4 rounded-4">
+            <div class="row align-items-center justify-content-center">
+                <section class="col-md-6 text-center text-md-start">
+                    <h1>hive</h1>
+                    <p>
+                        Welcome to <span class="header-font">hive</span>, the dynamic social media platform where
+                        connections and conversations flourish.<br>
+                        <span class="authFormTitle"></span> to join our community, share your moments, and engage with
+                        the world around you.
+                    </p>
+                </section>
+                <section class="col-md-6">
+                    <form class="card bg-white p-4 gap-4" id="authForm">
+                        <h2 class="authFormTitle">Sign Up</h2>
+                        <div id="usernameContainer">
+                            <label for="username">Username</label>
+                            <input type="text" id="username" name="username" class="form-control" 
+                            pattern="^[a-zA-Z0-9_]+$" title="Username can only contain alphanumeric characters and underscores." required>
+                        </div>
+                        
+                        <div>
+                            <label for="email">Noroff Email</label>
+                            <input type="email" id="email" name="email" class="form-control" 
+                                pattern=".+@(stud\.)?noroff\.no" title="A Noroff Email must end with `@noroff.no` or `@stud.noroff.no`" required>
+                        </div>
+                        <div>
+                            <label for="password">Password</label>
+                            <input type="password" id="password" name="password" class="form-control" minlength="8"
+                                required>
+                        </div>
+                        <button type="submit" class="btn btn-primary" id="authFormActionBtn">
+                            Sign Up
+                        </button>                       
+                        <hr />
+                        <div class="text-center">
+                            <p id="toggleAuthStateIntro">Allready have an account?</p>
+                            <button type="button" id="toggleAuthStateBtn" class="btn btn-secondary btn-sm text-white">
+                                Sign in
+                            </button>
+                        </div>
+                    </form>
+                </section>
+            </div>
+        </div>
+    </main>
+    <footer></footer>
+    <script type="module" src="auth.js"></script>
+    <script type="module" src="../../js/api/auth/auth.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

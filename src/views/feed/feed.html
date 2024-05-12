@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>hive | feed</title>
+    <link rel="stylesheet" href="../../styles/css/styles.css">
+    <link rel="stylesheet" href="feed.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <link rel="shortcut icon" href="../../assets/favicon.png" type="image/x-icon">
+</head>
+
+<body>
+    <header>
+        <nav class="navbar navbar-expand navbar-light bg-body-tertiary">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="#">hive</a>
+                <div class="d-flex">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="#">Feed</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link profile-link" href="">Profile</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <main>
+        <section class="container-sm">
+            <div class="row align-items-center justify-content-center">
+                <div class="col-2 my-2">
+                    <a class="profile-link" href="">
+                        <img id="image" src="" alt="profile image" class="img-fluid rounded-circle float-end profile-img lg">
+                    </a>
+                </div>
+                <div class="col-auto">
+                    <button class="btn btn-primary new-post-btn rounded-pill px-4 fw-bold" data-bs-toggle="modal" data-bs-target="#newPostModal">
+                        What's buzzing
+                    </button>
+                </div>
+            </div>
+            <hr>
+        </section>
+        <section class="search-field">
+            <div class="container-sm mb-3">
+                <form id="searchForm">
+                    <div class="input-group">
+                        <input id="search" type="text" class="form-control bg-white" placeholder="Search in authors, titles, text, images and tags"
+                            aria-label="Search for post" aria-describedby="search-button">
+                    </div>
+                </form>                
+            </div>
+        </section>
+        <section class="filter">
+            <div class="container">
+                <div class="row mt-2">
+                    <div class="col" id="activeFilters"></div>
+                    <div class="dropdown col d-flex justify-content-end p-0">
+                        <button class="btn btn-secondary btn-sm dropdown-toggle text-white" style="height: 2rem;" type="button" id="filterDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="bi bi-funnel"></i>
+                            Select Filters
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="filterDropdown">
+                            <li><a class="dropdown-item" href="#" data-filter="This weeks posts">This weeks posts</a></li>
+                            <li><a class="dropdown-item" href="#" data-filter="With reactions">With Reactions</a></li>
+                            <li><a class="dropdown-item" href="#" data-filter="With comments">With Comments</a></li>
+                            <li><a class="dropdown-item" href="#" data-filter="With Images">With Images</a></li>
+                            <li><a class="dropdown-item" href="#" data-filter="Only Text">Only Text</a></li>
+                            <li><a class="dropdown-item" href="#" data-filter="Edited Posts">Edited Posts</a></li>
+                        </ul>                    
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section id="feed">
+            <div id="feedSpinner" class="text-center" style="display: none;">
+                <div class="spinner-border text-primary" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+            </div>
+            <div id="feedContent"></div>
+        </section>
+        <section id="pagination">
+            <nav aria-label="Page navigation example">
+                <ul class="pagination justify-content-center">
+                </ul>
+              </nav>
+        </section>
+    </main>
+    
+    <footer></footer>
+
+    <!-- New Post Modal -->
+    <div class="modal fade" id="newPostModal" tabindex="-1" aria-labelledby="newPostModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="newPostModalLabel">New Post</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="newPostForm">
+                        <!-- Title input -->
+                        <div class="mb-3">
+                            <label for="postTitle" class="form-label">Title</label>
+                            <input type="text" class="form-control" id="postTitle" name="title" required placeholder="Enter the title of your post">
+                        </div>
+
+                        <!-- Body input -->
+                        <div class="mb-3">
+                            <label for="postBody" class="form-label">Body</label>
+                            <textarea class="form-control" id="postBody" name="body" placeholder="What's buzzing?"></textarea>
+                        </div>
+
+                        <!-- Tags input -->
+                        <div class="mb-3">
+                            <label for="postTags" class="form-label">Tags</label>
+                            <input type="text" class="form-control" id="postTags" name="tags" placeholder="Add tags (comma separated)">
+                        </div>
+
+                        <!-- Media URL input -->
+                        <div class="mb-3">
+                            <label for="mediaUrl" class="form-label">Media URL</label>
+                            <input type="url" class="form-control" id="mediaUrl" name="mediaUrl" placeholder="https://example.com/image.jpg">
+                        </div>
+
+                        <!-- Media Alt Text input -->
+                        <div class="mb-3">
+                            <label for="mediaAlt" class="form-label">Media Alt Text</label>
+                            <input type="text" class="form-control" id="mediaAlt" name="mediaAlt" placeholder="Describe the image">
+                        </div>
+
+                        <!-- Submit Button -->
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary" id="createBtn">Create Post
+                                <span class="spinner-border spinner-border-sm" style="display:none;" id="createSpinner" aria-hidden="true"></span>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="module" src="feed.js"></script>
+    <script type="module" src="../../js/api/post/post.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
