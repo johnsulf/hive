@@ -1,3 +1,22 @@
+/**
+ * Takes a post object and returns a post card HTML string.
+ * @param {Object} post The post object
+ * @param {boolean} isFeed If the post is displayed in the feed or not
+ * @returns {string} The post card HTML string
+ * @example
+ * ```js
+ * const postContainer = document.querySelector(".post-container");
+ * const post = {
+ *    id: "1",
+ *    ...additional properties
+ * };       
+ * 
+ * const postCard = buildPostCard(post, true);
+ * 
+ * postContainer.innerHTML = postCard;
+ * ```
+ */
+
 export function buildPostCard(post, isFeed = false) {
     return `
         <div id="${post.id}" class="container card position-relative post my-3 bg-white ${isFeed ? '' : 'post-view'}">
@@ -34,10 +53,11 @@ export function buildPostCard(post, isFeed = false) {
                     <i class="bi bi-chat col-1"></i>
                 </div>
             </div>
-            ${ !isFeed ? buildCommentSection(post) : "" }
+            ${!isFeed ? buildCommentSection(post) : ""}
         </div>
     `;
 }
+
 
 export function setPostLink() {
     const posts = document.querySelectorAll(".post");
@@ -54,38 +74,40 @@ export function setPostLink() {
  * Takes a date time string in this format: "2024-04-30T05:34:49.893Z" and returns a formatted date time string in this format: "30.04.2024 05:34"
  * @param {string} dateTimeString For example "2024-04-30T05:34:49.893Z"
  * @returns {string} For example "30.04.2024 05:34"
+ * @example
  * ```js
  * const dateTimeString = "2024-04-30T05:34:49.893Z";
  * const formattedDateTime = formatDateTime(dateTimeString);
  * console.log(formattedDateTime); // "30.04.2024 05:34"
  * ```
  */
+
 export function formatDateTime(dateTimeString) {
     const date = new Date(dateTimeString);
     const options = {
-      month: 'numeric',
-      day: 'numeric',
-      year: 'numeric',
-      hour: 'numeric',
-      minute: 'numeric',
-      hour12: false,
+        month: 'numeric',
+        day: 'numeric',
+        year: 'numeric',
+        hour: 'numeric',
+        minute: 'numeric',
+        hour12: false,
     };
     return date.toLocaleDateString('no-NO', options);
 }
 
 export function buildImage(media) {
-    return media && media.url 
-    ? `<img src="${media.url}" alt="${media.alt}" class="img-fluid post-img mb-3">` 
-    : "";
+    return media && media.url
+        ? `<img src="${media.url}" alt="${media.alt}" class="img-fluid post-img mb-3">`
+        : "";
 }
 
 export function buildReactions(post) {
-    return post.reactions.length === 0 
-    ?   `<div class="col-1 d-flex fw-bold gap-1">
+    return post.reactions.length === 0
+        ? `<div class="col-1 d-flex fw-bold gap-1">
             <p>${post._count.reactions}</p>
             <i class="bi bi-hand-thumbs-up"></i>
-        </div>` 
-    :   post.reactions.map(reaction => `
+        </div>`
+        : post.reactions.map(reaction => `
             <div class="col-1 d-flex fw-bold">
                 <p>${reaction.count}</p>
                 <p>${reaction.symbol}</p>
@@ -133,11 +155,11 @@ function buildCommentSection(post) {
             <div class="col-2"></div>
             <div class="col-8">
                 <h5>Comments</h5>
-                ${ post.comments.length === 0 ? "<p>There are no comments yet.</p>" : "" }
+                ${post.comments.length === 0 ? "<p>There are no comments yet.</p>" : ""}
             </div>
         </div>
 
-        ${ buildComments(post) }
+        ${buildComments(post)}
 
         <div class="row my-3">
             <div class="col-2"></div>

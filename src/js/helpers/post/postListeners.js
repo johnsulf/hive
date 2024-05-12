@@ -3,7 +3,7 @@ import { loggedInUser } from "../shared/constants.js";
 import { deletePost } from "../../api/post/post.js";
 import { updatePostHandler, postCommentHandler } from "./postHandlers.js";
 
-export function attachListeners() {    
+export function attachListeners() {
     if (post.author.name === loggedInUser.name) {
         const deleteButton = document.querySelector("#deleteBtn");
         deleteButton.addEventListener("click", async function () {

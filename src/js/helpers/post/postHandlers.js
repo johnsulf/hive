@@ -1,9 +1,9 @@
 import { createPost, updatePost, postComment } from "../../api/post/post.js";
 
 let postData;
- 
+
 export async function createPostHandler(event) {
-    event.preventDefault(); 
+    event.preventDefault();
 
     setModalElementsAndData();
     handleSpinnerAndButton("create", "inline-block", true);
@@ -15,12 +15,12 @@ export async function createPostHandler(event) {
 
 export async function updatePostHandler(event) {
     event.preventDefault();
-    
+
     setModalElementsAndData();
     handleSpinnerAndButton("update", "inline-block", true);
 
     await updatePost(postData);
-    
+
     handleSpinnerAndButton("update", "none", false);
 }
 
@@ -33,7 +33,7 @@ export async function postCommentHandler(event) {
     await postComment(comment);
 
     handleSpinnerAndButton("comment", "none", false);
-}  
+}
 
 function setModalElementsAndData() {
     const title = document.getElementById("postTitle").value;
@@ -48,7 +48,7 @@ function setModalElementsAndData() {
         body: body,
         tags: tags
     };
-    
+
     if (mediaUrl) {
         postData.media = {
             url: mediaUrl,
@@ -58,8 +58,8 @@ function setModalElementsAndData() {
 }
 
 function handleSpinnerAndButton(operation, spinnerDisplay, buttonDisabled) {
-    const spinner = document.getElementById(operation+"Spinner");
-    const button = document.getElementById(operation+"Btn");
+    const spinner = document.getElementById(operation + "Spinner");
+    const button = document.getElementById(operation + "Btn");
 
     spinner.style.display = spinnerDisplay;
     button.disabled = buttonDisabled;

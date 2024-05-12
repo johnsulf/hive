@@ -1,6 +1,6 @@
 import { API_KEY, BASE_URL, POSTS_URL, SOCIAL_URL } from "../../helpers/shared/constants.js";
 import { getFromLocalStorage } from "../../helpers/shared/localStorage.js";
-import { Post } from "../../models/postModel.js";   
+import { Post } from "../../models/postModel.js";
 
 export let allPosts = {};
 export let post;
@@ -73,10 +73,9 @@ export async function updatePost(postData) {
             body: JSON.stringify(postData)
         });
         const json = await response.json();
-        console.log("Updated post:", json);
     } catch (e) {
         console.error("Error updating post:", e);
-    } 
+    }
 }
 
 export async function deletePost() {

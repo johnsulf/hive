@@ -2,6 +2,7 @@
  * Saves a value to the browsers local storage
  * @param {string} key For example 'profile' or 'token'
  * @param {*} value 
+ * @example saveToLocalStorage('profile', { name: 'John Doe' });
  */
 
 export function saveToLocalStorage(key, value) {
@@ -11,7 +12,8 @@ export function saveToLocalStorage(key, value) {
 /**
  * Retrieves a value from the browsers local storage
  * @param {string} key For example 'profile' or 'token'
- * @returns {*} 
+ * @returns {*} The value from local storage
+ * @example getFromLocalStorage('profile');
  */
 
 export function getFromLocalStorage(key) {

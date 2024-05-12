@@ -14,12 +14,12 @@ const submitButton = document.getElementById("authFormActionBtn");
  * @throws {Error}
  * 
  * @example
- * import { register } from "./api/auth/auth.js";
  * register("John Doe", "johndoe@example.com, "password123");
  */
+
 async function register(name, email, password) {
     try {
-        const response = await fetch(BASE_URL+AUTH_URL+REGISTER_URL, {
+        const response = await fetch(BASE_URL + AUTH_URL + REGISTER_URL, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -49,14 +49,14 @@ async function login(email, password) {
             body: JSON.stringify({ email, password }),
         });
 
-        const json = await response.json(); 
+        const json = await response.json();
 
         if (!response.ok) {
             showToast(json.errors[0].message || "Login failed.", true);
             throw new Error("Login failed: " + json.errors[0].message || response.statusText);
         }
 
-        const { accessToken, ...profile } = json.data; 
+        const { accessToken, ...profile } = json.data;
         saveToLocalStorage("token", accessToken);
         saveToLocalStorage("profile", profile);
 
@@ -90,7 +90,7 @@ export async function onAuth(event) {
         } else {
             await login(email, password);
         }
-    } catch ( error ) {
+    } catch (error) {
         throw new Error("Authentication error:", error.message);
     } finally {
         submitButton.disabled = false;
